@@ -3,20 +3,10 @@
  */
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
-    Text,
     View,
-    ScrollView,
-    Image,
-    TouchableOpacity
 } from 'react-native';
-
-// 导入json数据
-// var Home_D5 = require('./XMG_Home_D5.json');
-
-
-
+import ShopCenterItem from './ShopCenterItem'
 class Common extends Component{
     constructor(props) {
         super(props);
@@ -113,37 +103,13 @@ class Common extends Component{
                     shopImage={data.img}
                     shopSale={data.showtext.text}
                     shopName={data.name}
+                    
                 />
             )
         }
         return itemArr;
     }
 }
-//);
-
-// 每一个商场
-class ShopCenterItem extends Component{
-    getDefaultProps() {
-        return {
-            shopImage: '',
-            shopSale: '',
-            shopName: '',
-        }
-    }
-    render() {
-        return (
-            <TouchableOpacity activeOpacity={0.8}>
-                <View style={styles.itemViewStyle}>
-                  
-                    <Image source={{ uri: this.props.shopImage }} style={styles.imageStyle} />
-                    {/* <Text style={styles.shopSaleStyle}>{this.props.shopSale}</Text> */}
-                    <Text style={styles.shopNameStyle}>{this.props.shopName}</Text>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
-//);
 
 const styles = StyleSheet.create({
     container: {
@@ -161,21 +127,6 @@ const styles = StyleSheet.create({
         flexWrap:"wrap"
        // padding: 10,
     },
-    itemViewStyle: {
-      width:140,
-      height:135,
-      backgroundColor:"white",
-      marginTop:10,
-      marginBottom:10,
-     // borderRadius:5,
-      elevation: 4,
-      alignItems:"center"
-    },
-    imageStyle: {
-        width: "100%",
-        height: 100,
-      
-    },
     shopSaleStyle: {
         // 定位
         position: 'absolute',
@@ -184,11 +135,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         color: 'white',
         padding: 3,
-    },
-    shopNameStyle: {
-        textAlign: 'center',
-        marginTop: 5,
-        color:"#757575"
     },
     leftViewStyle: {
         flexDirection: 'row',

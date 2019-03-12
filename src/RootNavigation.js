@@ -8,6 +8,7 @@ import DiorScreen from './home/DiorDetail'
 import YSLScreen from "./home/YslDetail" 
 import MacScreen from "./home/MacDetail"
 import ChanelScreen from "./home/ChanelDetail"
+import GoodsDetail from "./home/goods/GoodsDetail"
 //登陆跳转
 const LoginStack = createStackNavigator({
     LoginScreen: LoginScreen,
@@ -20,6 +21,7 @@ const HomeStack = createStackNavigator({
     YSLScreen:YSLScreen,
     MacScreen:MacScreen,
     ChanelScreen:ChanelScreen,
+    GoodsDetail:GoodsDetail,
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
     headerStyle: {
