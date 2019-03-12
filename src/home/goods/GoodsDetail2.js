@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-
-class GoodsDetail extends Component {
+import {
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
+class GoodsDetail2 extends Component {
     constructor(props) {
         super(props);
         this.state = {  };
@@ -8,10 +12,10 @@ class GoodsDetail extends Component {
     render() {
         return (
             <View>
-                <Text>GoodsDetail</Text>
-            </View>
+            <Text>GoodsDetail2</Text>
+        </View>
         );
     }
 }
 
-export default GoodsDetail;
+export default GoodsDetail2;

@@ -13,7 +13,7 @@ class Common extends Component{
         this.state = {
             data: [
                 {
-                  "detailurl": "imeituan://www.meituan.com/web/?url=http://i.meituan.com/shoppingmall/smDetail/4374715",
+                  "detailurl": "GoodsDetail1",
                   "promotionIcon": "",
                   "name": "优衣库",
                   "img": "http://p0.meituan.net/codeman/c217fffcbf9b434844434a0acbdb434827837.jpg",
@@ -28,7 +28,7 @@ class Common extends Component{
                   "promotionText": "送福利 商品低至1.5折"
                 },
                 {
-                  "detailurl": "imeituan://www.meituan.com/web/?url=http://i.meituan.com/shoppingmall/smDetail/50606658",
+                  "detailurl": "GoodsDetail2",
                   "promotionIcon": "",
                   "name": "爱衣服",
                   "img": "http://p0.meituan.net/codeman/c217fffcbf9b434844434a0acbdb434827837.jpg",
@@ -43,7 +43,7 @@ class Common extends Component{
                   "promotionText": "春来花开 满100最高减60"
                 },
                 {
-                  "detailurl": "imeituan://www.meituan.com/web/?url=http://i.meituan.com/shoppingmall/smDetail/75813274",
+                  "detailurl": "GoodsDetail3",
                   "promotionIcon": "",
                   "name": "安奈儿",
                   "img": "http://p0.meituan.net/codeman/2ad0711b7ffa9433bdc2577e7896082937607.jpg",
@@ -58,7 +58,7 @@ class Common extends Component{
                   "promotionText": "新春送福利 购物满额有好礼"
                 },
                 {
-                  "detailurl": "imeituan://www.meituan.com/web/?url=http://i.meituan.com/shoppingmall/smDetail/41692498",
+                  "detailurl": "GoodsDetail4",
                   "promotionIcon": "",
                   "name": "太平鸟",
                   "img": "http://p0.meituan.net/codeman/d675f4ad9b7ece9f0593db298beb082d31800.jpg",
@@ -91,19 +91,25 @@ class Common extends Component{
         );
     }
 
+    // abc = (screen) => {
+    //     this.props.efg(screen);
+    // }
+
     // 返回所有item
     renderAllItem() {
         var itemArr = [];
         var shopData = this.state.data;
         for (var i = 0; i < shopData.length; i++) {
             var data = shopData[i];
+            console.log(data.detailurl)
             itemArr.push(
                 <ShopCenterItem
                     key={i}
                     shopImage={data.img}
                     shopSale={data.showtext.text}
                     shopName={data.name}
-                    
+                    detailUrl={data.detailurl}
+                    abc={this.props.efg}
                 />
             )
         }

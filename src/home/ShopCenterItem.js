@@ -13,7 +13,8 @@ class ShopCenterItem extends Component {
     }
     render() {
         return (
-            <TouchableOpacity activeOpacity={0.8} >
+            <TouchableOpacity activeOpacity={0.8} onPress={()=>{
+                this.props.abc(this.props.detailUrl)}}>
                 <View style={styles.itemViewStyle}>
                     <Image source={{ uri: this.props.shopImage }} style={styles.imageStyle} />
                     <Text style={styles.shopNameStyle}>{this.props.shopName}</Text>

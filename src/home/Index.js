@@ -134,7 +134,7 @@ export default class Index extends Component {
           </View>
 
           {/* 精品推荐 */}
-          <Recommend />
+          <Recommend efg={this.efg} />
           {/* 每日上新 */}
           <NewUpload/>
         </ScrollView>
@@ -143,6 +143,9 @@ export default class Index extends Component {
     );
   }
 
+  efg = (screen)=> {
+    this.props.navigation.navigate(screen);
+  }
 }
 //<Text style={styles.text}>首页</Text>
 

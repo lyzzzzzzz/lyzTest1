@@ -8,7 +8,6 @@ import {
     View,
 } from 'react-native';
 
-// 导入json数据
 var Common = require('./Common')
 
 class Recommend extends Component {
@@ -16,7 +15,7 @@ class Recommend extends Component {
         return (
             <View style={styles.container}>
                 <Text style={{ color: "#C6C6C6", fontSize: 16, marginBottom: 10 }}>精 / 品 / 推 / 荐</Text>
-                <Common />
+                <Common  efg={this.props.efg} />
             </View>
 
         );
