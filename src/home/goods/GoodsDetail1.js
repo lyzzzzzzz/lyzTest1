@@ -4,7 +4,8 @@ import {
     Image,
     View,
     Text,
-    ScrollView
+    ScrollView,
+    TextInput
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 var Dimensions = require('Dimensions');
@@ -39,8 +40,8 @@ class GoodsDetail1 extends Component {
                         showsPagination={true}       //为false不显示下方圆点
                         dot={<View style={{           //未选中的圆点样式
                             backgroundColor: 'rgba(0,0,0,.2)',
-                            width: 18,
-                            height: 18,
+                            width: 14,
+                            height: 14,
                             borderRadius: 4,
                             marginLeft: 10,
                             marginRight: 9,
@@ -49,8 +50,8 @@ class GoodsDetail1 extends Component {
                         }} />}
                         activeDot={<View style={{    //选中的圆点样式
                             backgroundColor: '#007aff',
-                            width: 18,
-                            height: 18,
+                            width: 14,
+                            height: 14,
                             borderRadius: 4,
                             marginLeft: 10,
                             marginRight: 9,
@@ -80,8 +81,15 @@ class GoodsDetail1 extends Component {
    
 </View>
 </ScrollView> 
-    <View style={{width:screenW,height:50,backgroundColor:'pink'}}>
-    <Text>ggugugugg</Text>
+    <View style={{width:screenW,height:50,backgroundColor:'#FFACAC',display:'flex',flexDirection:'row'}}>
+   <View style={{height:'100%',width:'60%',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+     <Image source={require('../../images/add1.png')}></Image>
+     <TextInput editable={false} value={'1'} style={{width:60,height:"100%",fontSize:20,color:'white',textAlign:'center'}}></TextInput>
+     <Image source={require('../../images/jian.png')}></Image>
+   </View>
+   <View style={{width:'40%',backgroundColor:'skyblue',height:'100%',display:'flex',flexDirection:'row',alignItems: 'center',  justifyContent: 'center',}}>
+   <Text style={{fontSize:18,color:'white'}}>加入购物车</Text>
+   </View>
     </View>   
    
             </View>
