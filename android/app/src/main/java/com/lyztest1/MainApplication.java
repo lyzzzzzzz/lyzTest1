@@ -3,6 +3,7 @@ package com.lyztest1;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cn.qiuxiang.react.geolocation.AMapGeolocationPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -24,6 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AMapGeolocationPackage(),
             new RNGestureHandlerPackage()
       );
     }

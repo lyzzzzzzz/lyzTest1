@@ -17,6 +17,7 @@ class ShopCenterItem extends Component {
                 this.props.abc(this.props.detailUrl)}}>
                 <View style={styles.itemViewStyle}>
                     <Image source={{ uri: this.props.shopImage }} style={styles.imageStyle} />
+                    {/* <Image source={require(this.props.shopImage)} style={styles.imageStyle} />  */}
                     <Text style={styles.shopNameStyle}>{this.props.shopName}</Text>
                 </View>
             </TouchableOpacity>

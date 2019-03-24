@@ -4619,6 +4619,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "http://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
+react-native-amap-geolocation@^0.3.2:
+  version "0.3.2"
+  resolved "http://registry.npm.taobao.org/react-native-amap-geolocation/download/react-native-amap-geolocation-0.3.2.tgz#99b208638dd7ff911e60d34b36ee1ffc0d9b82b5"
+  integrity sha1-mbIIY43X/5EeYNNLNu4f/A2bgrU=
+
 react-native-gesture-handler@^1.0.0, react-native-gesture-handler@^1.0.12:
   version "1.0.12"
   resolved "http://registry.npm.taobao.org/react-native-gesture-handler/download/react-native-gesture-handler-1.0.12.tgz#99a22f90212df299245357dbd3a9a01c788f310b"

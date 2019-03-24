@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
+    Text
 } from 'react-native';
 import ShopCenterItem from './ShopCenterItem'
 class Common extends Component{
@@ -16,7 +17,8 @@ class Common extends Component{
                   "detailurl": "GoodsDetail1",
                   "promotionIcon": "",
                   "name": "优衣库",
-                  "img": "http://p0.meituan.net/codeman/c217fffcbf9b434844434a0acbdb434827837.jpg",
+                //  "img": "../images/6zhe.jpg",
+                "img": "http://p0.meituan.net/codeman/c217fffcbf9b434844434a0acbdb434827837.jpg",
                   "showtext": {
                     "text": "6折优惠",
                     "count": 84,
@@ -32,6 +34,7 @@ class Common extends Component{
                   "promotionIcon": "",
                   "name": "爱衣服",
                   "img": "http://p0.meituan.net/codeman/c217fffcbf9b434844434a0acbdb434827837.jpg",
+                  //"img": "../images/6zhe.jpg",
                   "showtext": {
                     "text": "8折优惠",
                     "count": 55,
@@ -47,6 +50,7 @@ class Common extends Component{
                   "promotionIcon": "",
                   "name": "安奈儿",
                   "img": "http://p0.meituan.net/codeman/2ad0711b7ffa9433bdc2577e7896082937607.jpg",
+                  //"img": "../images/6zhe.jpg",
                   "showtext": {
                     "text": "6折优惠",
                     "count": 61,
@@ -61,7 +65,8 @@ class Common extends Component{
                   "detailurl": "GoodsDetail4",
                   "promotionIcon": "",
                   "name": "太平鸟",
-                  "img": "http://p0.meituan.net/codeman/d675f4ad9b7ece9f0593db298beb082d31800.jpg",
+                 "img": "http://p0.meituan.net/codeman/d675f4ad9b7ece9f0593db298beb082d31800.jpg",
+                 // "img": "../images/6zhe.jpg",
                   "showtext": {
                     "text": "8折优惠",
                     "count": 48,
@@ -77,6 +82,29 @@ class Common extends Component{
       }
 
     render() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return (
             <View style={styles.container}>
                 <View
