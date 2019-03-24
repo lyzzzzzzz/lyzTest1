@@ -84,7 +84,7 @@ class LoginScreen extends Component {
                     marginTop:20,
                      backgroundColor:'#FFACAC'
                       }}>
-                      <Text style={{color:'white',fontSize:18}}></Text>登录</Text>
+                      <Text style={{color:'white',fontSize:18}}></Text>登录1</Text>
                 </View>
             </View>
         );
