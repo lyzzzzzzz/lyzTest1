@@ -34,13 +34,13 @@ export default class My extends Component{
              <Text style={{marginTop:10,color:'#7B0000',fontSize:18,fontWeight:'bold'}}>lyzzzzzzzzz</Text>
         </View>
         <View style={{marginTop:40}}>
-          <Text style={{marginBottom:3,marginLeft:10,fontSize:16}}>修改支付密码</Text>
+          <Text style={{marginBottom:3,marginLeft:10,fontSize:16}}>修改个人信息</Text>
           <View style={{height:2,backgroundColor:'#EFEFEF'}}></View>
         </View>
-        <View style={{marginTop:10}}>
+        {/* <View style={{marginTop:10}}>
           <Text style={{marginBottom:3,marginLeft:10,fontSize:16}}>修改登录密码</Text>
           <View style={{height:2,backgroundColor:'#EFEFEF'}}></View>
-        </View>
+        </View> */}
         <View style={{marginTop:10}}>
           <Text style={{marginBottom:3,marginLeft:10,fontSize:16}} onPress={this.toLogin}>登录</Text>
           <View style={{height:2,backgroundColor:'#EFEFEF'}}></View>

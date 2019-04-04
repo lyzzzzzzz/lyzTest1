@@ -3,7 +3,8 @@ import {
     Text,
     View,
     Image,
-    TextInput
+    TextInput,
+    Button
 } from 'react-native';
 
 var Dimensions = require('Dimensions');
@@ -38,7 +39,10 @@ class Riegister extends Component {
                 }}>
                     <Image source={require('../images/phone.png')} style={{ width: 25, height: 25 }}></Image>
                     <TextInput placeholder="手机号码" style={{ width: 200, height: '100%', }} />
+                    {/* <Button title='获取验证码' color='#FFACAC' style={{height:'90%'}}></Button> */}
                 </View>
+
+
                 <View style={{
                     width: 260,
                     borderRadius: 25,
@@ -48,11 +52,16 @@ class Riegister extends Component {
                     justifyContent: 'center',
                     borderColor: '#FFACAC',
                     borderWidth: 1,
-                    marginTop: 20
+                     marginTop:20
                 }}>
-                    <Image source={require('../images/Password1.png')} style={{ width: 25, height: 25 }}></Image>
-                    <TextInput placeholder="登录密码" style={{ width: 200, height: '100%', }} />
+                    <Image source={require('../images/code.png')} style={{ width: 21, height: 21 }}></Image>
+                    <TextInput placeholder="验证码" style={{ width: 120, height: '100%', }} />
+                    <Button title='获取验证码' color='#FFACAC' style={{height:'90%'}}></Button>
                 </View>
+
+                  
+              
+                 
 
 
                 <View style={{
@@ -67,8 +76,9 @@ class Riegister extends Component {
                     marginTop: 20
                 }}>
                     <Image source={require('../images/Password1.png')} style={{ width: 25, height: 25 }}></Image>
-                    <TextInput placeholder="支付密码" style={{ width: 200, height: '100%', }} />
+                    <TextInput placeholder="登录密码" style={{ width: 200, height: '100%', }} secureTextEntry={true}/>
                 </View>
+
 
                 <View style={{
                     width: 260,
