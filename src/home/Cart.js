@@ -12,26 +12,56 @@ import {
     TouchableOpacity,
     TextInput,
 } from 'react-native';
+import { State } from 'react-native-gesture-handler';
 
-var TitleView = require('./CartTitle');
-// 导入json数据
-var Home_D5 = require('./XMG_Home_D5.json');
 
-class Cart extends Component{
+
+export default Cart;
+
+class Cart extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = { 
+             address:'广东省肇庆市怀集县凤岗镇桃花村委会vvvvvvvvvv',
+             name:'李雅真',
+             phone:'17724272471'
+         };
+    }
+
+
     render() {
         return (
-            <View style={styles.container}>
-                <TitleView
-                    leftIcon="gw"
-                    leftTitle="购物车"
+            <View >
+                <View style={{ width: '100%', height: 50, backgroundColor: '#FFACAC', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>购物车</Text>
+                </View>
 
-                />
-                <ScrollView
-                    style={styles.scrollViewStyle}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                >
-                    <View style={{ flexDirection: 'column' }}>
+
+                <ScrollView showsHorizontalScrollIndicator={false} >
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center', }}>
+
+
+                        <View style={styles.addr}>
+                            <View style={{ width: '100%', height: 35, flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ color: '#571D0C', fontSize: 17, marginLeft: 5 }}>收货地址</Text>
+                            </View>
+                            <View style={{ width: '100%', height: 2, backgroundColor: '#F0F0F0' }}></View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%',}}>
+                                <View style={{ width: '80%', height: 90, flexDirection:'column',justifyContent:'space-around',marginLeft: 5}}>
+                                <Text style={{fontSize:16,color: '#571D0C'}}>{this.state.address}</Text>
+                                <Text style={{fontSize:15}}>{this.state.name}</Text>
+                                <Text style={{fontSize:15}}>{this.state.phone}</Text>
+                                </View>
+                                <View style={{ width: '15%', height:50,flexDirection:'row',alignItems:'center',justifyContent:'flex-end' }}>
+                                <Image source={require('../images/editAddr.png')}></Image>
+                                </View>
+                            </View>
+
+                        </View>
+
+                        {/* 
+
                         <View style={styles.itemViewStyle}>
                             <Image source={require('../images/p5.png')} style={styles.imageStyle} />
                             <View style={{ flexDirection: 'column' }}>
@@ -46,15 +76,15 @@ class Cart extends Component{
                                     <Text style={styles.shopNameStyle}>均码</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
-                                <View style={styles.inputStyle}>                                
-                                 <TextInput  style={styles.input1}  editable={false} value='-' />
-                                 <TextInput  style={styles.middleInput}  />
-                                 <TextInput  value='+' style={styles.input2}  editable={false} />
-                                 </View>
-                                 <View style={styles.itemViewStyle}>
-                                    <Text style={styles.delete}>×</Text>
+                                    <View style={styles.inputStyle}>
+                                        <TextInput style={styles.input1} editable={false} value='-' />
+                                        <TextInput style={styles.middleInput} />
+                                        <TextInput value='+' style={styles.input2} editable={false} />
+                                    </View>
+                                    <View style={styles.itemViewStyle}>
+                                        <Text style={styles.delete}>×</Text>
+                                    </View>
                                 </View>
-                                 </View>
                             </View>
                         </View>
 
@@ -72,9 +102,9 @@ class Cart extends Component{
                                     <Text style={styles.shopNameStyle}>L</Text>
                                 </View>
                             </View>
-                        </View>
+                        </View> */}
 
-                        <View style={styles.itemViewStyle2}>
+                        {/* <View style={styles.itemViewStyle2}>
                             <Image source={require('../images/p5.png')} style={styles.imageStyle} />
                             <View style={{ flexDirection: 'column' }}>
                                 <View style={styles.itemViewStyle}>
@@ -85,10 +115,10 @@ class Cart extends Component{
                                     <Text style={styles.shopNameStyle}>优衣库旗舰店</Text>
                                 </View>
                             </View>
-                        </View>
+                        </View> */}
 
 
-                     
+
                     </View>
                 </ScrollView>
             </View>
@@ -101,8 +131,15 @@ class Cart extends Component{
 
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 0,
+
+    addr: {
+        width: '95%',
+        height: 130,
+        backgroundColor: 'white',
+        marginTop: 10,
+        elevation: 2,
+        marginBottom: 10,
+        flexDirection: 'column',
     },
     scrollViewStyle: {
         flexDirection: 'row',
@@ -110,9 +147,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     itemViewStyle: {
-        //margin: 8,
+        width: '95%',
         flexDirection: 'row',
-      
+        elevation: 5
     },
     imageStyle: {
         width: 120,
@@ -124,8 +161,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 5,
         color: 'black',
-        width:185
-       
+        width: 185
+
     },
     leftViewStyle: {
         flexDirection: 'row',
@@ -135,13 +172,13 @@ const styles = StyleSheet.create({
     clothPayStyle: {
         textAlign: 'right',
         marginTop: 5,
-       // marginLeft: 55,
+        // marginLeft: 55,
         color: 'black',
-        justifyContent: 'space-around', 
-    
+        justifyContent: 'space-around',
+
     },
     itemViewStyle2: {
-       // margin: 8,
+        // margin: 8,
         flexDirection: 'row',
         marginTop: 25
     },
@@ -150,46 +187,46 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 10,
         color: 'gray',
-        fontSize:10, 
+        fontSize: 10,
     },
-      input1: {
+    input1: {
         textAlign: 'center',
-        height: 30,  
+        height: 30,
         borderWidth: 1,
         borderColor: '#ccc',
-        width:25,
+        width: 25,
         marginLeft: 10,
-        padding:0,
+        padding: 0,
         marginTop: 8,
-      },
-      middleInput: {
+    },
+    middleInput: {
         textAlign: 'center',
-        height:30,
-        borderWidth:1,
+        height: 30,
+        borderWidth: 1,
         borderColor: '#ccc',
-        width:45,
-        borderLeftWidth:0,
-        borderRightWidth:0,
-        padding:0,
+        width: 45,
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
+        padding: 0,
         marginTop: 8,
     },
     input2: {
         textAlign: 'center',
-        height:30,  
+        height: 30,
         borderWidth: 1,
         borderColor: '#ccc',
-        width:25,
-        padding:0,
+        width: 25,
+        padding: 0,
         marginTop: 8,
-      },
-      delete:{
-          fontSize:40,
-          color:'#E0E0E0'
-      },
-      inputStyle:{
+    },
+    delete: {
+        fontSize: 40,
+        color: '#E0E0E0'
+    },
+    inputStyle: {
         flexDirection: 'row',
-        width:180,
-      }
+        width: 180,
+    }
 });
 
 // 输出
