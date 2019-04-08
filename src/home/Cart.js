@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import {
-    AppRegistry,
+    FlatList,
     StyleSheet,
     Text,
     View,
@@ -11,6 +11,8 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
+    Alert,
+    SectionList
 } from 'react-native';
 import { State } from 'react-native-gesture-handler';
 
@@ -19,18 +21,31 @@ import { State } from 'react-native-gesture-handler';
 export default Cart;
 
 class Cart extends Component {
-    
+
     constructor(props) {
         super(props);
-        this.state = { 
-             address:'广东省肇庆市怀集县凤岗镇桃花村委会vvvvvvvvvv',
-             name:'李雅真',
-             phone:'17724272471'
-         };
+        this.state = {
+            address: '广东省肇庆市怀集县凤岗镇桃花村委会vvvvvvvvvv',
+            name: '李雅真',
+            phone: '17724272471',
+            goodsList: [],
+
+        };
+    }
+
+
+    _onPressButton() {
+        Alert.alert('You tapped the button!')
     }
 
 
     render() {
+
+        //    let goodsView=(<Text>ddddddddddddddd</Text>)
+
+
+
+
         return (
             <View >
                 <View style={{ width: '100%', height: 50, backgroundColor: '#FFACAC', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -47,18 +62,52 @@ class Cart extends Component {
                                 <Text style={{ color: '#571D0C', fontSize: 17, marginLeft: 5 }}>收货地址</Text>
                             </View>
                             <View style={{ width: '100%', height: 2, backgroundColor: '#F0F0F0' }}></View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%',}}>
-                                <View style={{ width: '80%', height: 90, flexDirection:'column',justifyContent:'space-around',marginLeft: 5}}>
-                                <Text style={{fontSize:16,color: '#571D0C'}}>{this.state.address}</Text>
-                                <Text style={{fontSize:15}}>{this.state.name}</Text>
-                                <Text style={{fontSize:15}}>{this.state.phone}</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%', }}>
+                                <View style={{ width: '80%', height: 90, flexDirection: 'column', justifyContent: 'space-around', marginLeft: 5 }}>
+                                    <Text style={{ fontSize: 16, color: '#571D0C' }}>{this.state.address}</Text>
+                                    <Text style={{ fontSize: 15 }}>{this.state.name}</Text>
+                                    <Text style={{ fontSize: 15 }}>{this.state.phone}</Text>
                                 </View>
-                                <View style={{ width: '15%', height:50,flexDirection:'row',alignItems:'center',justifyContent:'flex-end' }}>
-                                <Image source={require('../images/editAddr.png')}></Image>
+                                <View style={{ width: '15%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                                    <Image source={require('../images/editAddr.png')}></Image>
                                 </View>
                             </View>
 
                         </View>
+
+                        <FlatList
+                            style={{ width: '100%'}}
+                            data={[{ name: '眼影', colorNum: '#18' }, { name: '粉底', colorNum: '#18' }]}
+                            renderItem={({ item }) =>
+                                <View style={styles.goongs}>
+                                    <Text>{item.name}</Text>
+                                </View>
+
+                            }
+                        />
+
+
+                        {/* <View style={styles.addr}>
+                            <FlatList
+                                style={{ width: '95%', }}
+                                data={[{ name: '眼影', colorNum: '#18' }, { name: '粉底', colorNum: '#18' }]}
+                                renderItem={({ item }) =>
+                                    <View style={{ width: '100%', height: 100, elevation: 5, backgroundColor: 'white',}}>
+                                        <Text>{item.name}</Text>
+                                    </View>
+
+                                }
+                            />
+
+                        </View> */}
+
+
+                        {/* {goodsView} */}
+
+                        {/* <FlatList
+                            data={[{ key: 'a' }, { key: 'b' }]}
+                            renderItem={({ item }) => <Text>{item.key}</Text>}
+                        /> */}
 
                         {/* 
 
@@ -131,7 +180,16 @@ class Cart extends Component {
 
 
 const styles = StyleSheet.create({
-
+    button: {
+        marginBottom: 30,
+        width: 260,
+        alignItems: 'center',
+        backgroundColor: '#2196F3'
+    },
+    buttonText: {
+        padding: 20,
+        color: 'white'
+    },
     addr: {
         width: '95%',
         height: 130,
@@ -141,6 +199,20 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         flexDirection: 'column',
     },
+
+
+    goongs: {
+        width: '95%',
+        height: 130,
+        backgroundColor: 'white',
+        marginTop: 2,
+        elevation: 5,
+      marginBottom:1,
+       marginLeft:10
+       
+
+    },
+
     scrollViewStyle: {
         flexDirection: 'row',
         backgroundColor: 'white',
