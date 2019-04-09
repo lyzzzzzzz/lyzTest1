@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
   tabIcon2: {
     width: 23,
     height: 23,
-    color: "#7F0000"
+   
   }
 });

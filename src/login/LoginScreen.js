@@ -41,11 +41,10 @@ class LoginScreen extends Component {
 
 
   loginFetch = () => {
-    console.log(this.state.userPhone)
-    console.log(this.state.userLoginpwd)
     var myreg =/^[1][3,4,5,7,8][0-9]{9}$/;
     if (this.state.userPhone === '' || this.state.userLoginpwd === '') {
       ToastAndroid.show("不能为空!", ToastAndroid.SHORT);
+      return false;
     } else if (!myreg.test(this.state.userPhone)) {
       ToastAndroid.show("手机号码格式错误!", ToastAndroid.SHORT);
       return false;
