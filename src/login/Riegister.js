@@ -50,7 +50,7 @@ class Riegister extends Component {
             var data = {
                 "userPhone": this.state.userPhone,
                 "userLoginpwd": this.state.userLoginpwd,
-                "code": this.state.code,
+                "phoneCodeCode": this.state.code,
                 "userPaypwd": this.state.userPaypwd,
                 "userAddress": this.state.userAddress,
             };
@@ -66,7 +66,6 @@ class Riegister extends Component {
                 .then((response) => response.json())
                 .catch(error => console.error('Error:', error))
                 .then((responseData) => {
-                    console.log(responseData);
 
                     if (responseData.code === '1') {
                         this.interval = setInterval(() => {
@@ -101,7 +100,7 @@ class Riegister extends Component {
             var data = {
                 "userPhone": this.state.userPhone,
                 "userLoginpwd": this.state.userLoginpwd,
-                "code": this.state.code,
+                "phoneCodeCode": this.state.code,
                 "userPaypwd": this.state.userPaypwd,
                 "userAddress": this.state.userAddress,
                 "phoneCodeTime": new Date().getTime()
@@ -119,8 +118,16 @@ class Riegister extends Component {
                 .then((response) => response.json())
                 .catch(error => console.error('Error:', error))
                 .then((responseData) => {
-                    console.log("qqqqq");
+                    console.log("sssssssssssssssssss")
                     console.log(responseData);
+                    if (responseData.code === '1') {
+                        this
+                            .props
+                            .navigation
+                            .goBack()
+                    } else {
+                        ToastAndroid.show("注册失败!", ToastAndroid.SHORT);
+                    }
 
 
                 });
