@@ -106,7 +106,6 @@ class Riegister extends Component {
                 "phoneCodeTime": new Date().getTime()
             };
 
-
             fetch('http://192.168.43.252:8080/user/register', {
                 method: 'POST',
                 async: true,
@@ -118,8 +117,6 @@ class Riegister extends Component {
                 .then((response) => response.json())
                 .catch(error => console.error('Error:', error))
                 .then((responseData) => {
-                    console.log("sssssssssssssssssss")
-                    console.log(responseData);
                     if (responseData.code === '1') {
                         this
                             .props
@@ -128,11 +125,7 @@ class Riegister extends Component {
                     } else {
                         ToastAndroid.show("注册失败!", ToastAndroid.SHORT);
                     }
-
-
                 });
-
-
         }
 
     }

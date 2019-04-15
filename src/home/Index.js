@@ -8,18 +8,42 @@ import {
   TextInput,
   Image,
   Platform,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 var Dimensions = require('Dimensions');
 var screenW = Dimensions.get('window').width;
 var screenH = Dimensions.get('window').height;
 var Recommend = require('./Recommend');
-var NewUpload=require('./NewUpload')
+var NewUpload = require('./NewUpload')
 export default class Index extends Component {
   constructor(props) {
     super(props);
+    this.state = {  
+      newUploadList:[]
+    };
 
+  }
+
+  componentDidMount=()=>{
+    fetch('http://192.168.43.252:8080/product/selectProductByToday', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+      .then((response) => response.json())
+      .catch(error => console.error('Error:', error))
+      .then((responseData) => {
+        console.log('responseData');
+        console.log(responseData)
+        if (responseData.length!=0) {
+        this.setState({newUploadList:responseData})
+        } else {
+          ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
+        }
+      });
   }
 
   // 首页的导航条
@@ -39,32 +63,32 @@ export default class Index extends Component {
     )
   }
 
-  diorDetail=()=>{
+  diorDetail = () => {
     this
-    .props
-    .navigation
-    .navigate('DiorScreen')
+      .props
+      .navigation
+      .navigate('DiorScreen')
   }
 
-  yslDetail=()=>{
+  yslDetail = () => {
     this
-    .props
-    .navigation
-    .navigate('YSLScreen')
+      .props
+      .navigation
+      .navigate('YSLScreen')
   }
 
-  macDetail=()=>{
+  macDetail = () => {
     this
-    .props
-    .navigation
-    .navigate('MacScreen')
+      .props
+      .navigation
+      .navigate('MacScreen')
   }
 
-  chanelDetail=()=>{
+  chanelDetail = () => {
     this
-    .props
-    .navigation
-    .navigate('ChanelScreen')
+      .props
+      .navigation
+      .navigate('ChanelScreen')
   }
 
 
@@ -136,14 +160,27 @@ export default class Index extends Component {
           {/* 精品推荐 */}
           <Recommend efg={this.efg} />
           {/* 每日上新 */}
-          <NewUpload/>
+          {/* <NewUpload/> */}
+           <Text style={{textAlign:'center',fontSize:18,marginBottom:20, color:"#C6C6C6"}}>每 / 日 / 上 / 新</Text>
+          <FlatList
+           data={this.state.newUploadList}
+            numColumns='2'
+            renderItem={({ item }) =>  <View style={styles.itemViewStyle}>
+            <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+            <Text style={styles.shopNameStyle}>{item.productName}</Text>
+        </View>
+          }
+          />
+
+
+
         </ScrollView>
 
       </View>
     );
   }
 
-  efg = (screen)=> {
+  efg = (screen) => {
     this.props.navigation.navigate(screen);
   }
 }
@@ -156,6 +193,26 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: '#F0F0F0'
     backgroundColor: 'white'
+  },
+  imageStyle: {
+    width: "100%",
+    height: 100,
+  
+},
+shopNameStyle: {
+  textAlign: 'center',
+  marginTop: 5,
+  color:"#757575"
+},
+  itemViewStyle: {
+    width:150,
+    height:160,
+    backgroundColor:"white",
+    marginTop:10,
+    marginBottom:10,
+    elevation: 4,
+    alignItems:"center",
+    marginLeft:20
   },
   text: {
     fontSize: 30,

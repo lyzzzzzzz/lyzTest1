@@ -74,8 +74,6 @@ class LoginScreen extends Component {
             ToastAndroid.show("电话号码或密码错误!", ToastAndroid.SHORT);
           }
         });
-
-
     }
 
 

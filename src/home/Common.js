@@ -83,28 +83,6 @@ class Common extends Component{
 
     render() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return (
             <View style={styles.container}>
                 <View
@@ -119,9 +97,6 @@ class Common extends Component{
         );
     }
 
-    // abc = (screen) => {
-    //     this.props.efg(screen);
-    // }
 
     // 返回所有item
     renderAllItem() {
