@@ -21,12 +21,14 @@ export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {  
-      newUploadList:[]
+      newUploadList:[],
+      recommendList:[]
     };
 
   }
 
   componentDidMount=()=>{
+    //获取newUploadList
     fetch('http://192.168.43.252:8080/product/selectProductByToday', {
       method: 'GET',
       headers: new Headers({
@@ -44,6 +46,24 @@ export default class Index extends Component {
           ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
         }
       });
+
+ //获取recommendList
+ fetch('http://192.168.43.252:8080/product/selectAllBySale', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+      .then((response) => response.json())
+      .catch(error => console.error('Error:', error))
+      .then((responseData) => {
+        if (responseData.length!=0) {
+        this.setState({recommendList:responseData})
+        } else {
+          ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
+        }
+      });
+
   }
 
   // 首页的导航条
@@ -158,10 +178,22 @@ export default class Index extends Component {
           </View>
 
           {/* 精品推荐 */}
-          <Recommend efg={this.efg} />
+          {/* <Recommend efg={this.efg} /> */}
+          <Text style={{textAlign:'center',fontSize:18,marginBottom:20, color:"#C6C6C6",marginTop:30}}>精 / 品 / 推 / 荐</Text>
+          <FlatList
+           data={this.state.recommendList}
+            numColumns='2'
+            renderItem={({ item }) =>  <View style={styles.itemViewStyle}>
+            <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+            <Text style={styles.shopNameStyle}>{item.productName}</Text>
+            </View>
+ }
+ />
+
+
           {/* 每日上新 */}
           {/* <NewUpload/> */}
-           <Text style={{textAlign:'center',fontSize:18,marginBottom:20, color:"#C6C6C6"}}>每 / 日 / 上 / 新</Text>
+           <Text style={{textAlign:'center',fontSize:18,marginBottom:20, color:"#C6C6C6",marginTop:30}}>每 / 日 / 上 / 新</Text>
           <FlatList
            data={this.state.newUploadList}
             numColumns='2'
@@ -196,7 +228,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: "100%",
-    height: 100,
+    height: 120,
   
 },
 shopNameStyle: {
