@@ -8,9 +8,10 @@ import {
   TextInput,
   Image,
   Platform,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
-var Common = require('./Common')
+import baseUrl from '../Comment'
 var screenW = Dimensions.get('window').width;
 export default class ChanelDetail extends Component {
 
@@ -22,6 +23,33 @@ export default class ChanelDetail extends Component {
     headerTitle: "Chanel"
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      productList: [],
+    };
+
+  }
+
+  componentDidMount = () => {
+    //获取商品列表
+    fetch(baseUrl + '/product/selectProductByBrand?product_brand=chanel', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+      .then((response) => response.json())
+      .catch(error => console.error('Error:', error))
+      .then((responseData) => {
+        if (responseData.length != 0) {
+          this.setState({ productList: responseData })
+        } else {
+          ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
+        }
+      });
+  }
+
 
   render() {
     return (
@@ -30,8 +58,17 @@ export default class ChanelDetail extends Component {
         <View style={styles.navBarStyle}>
           <TextInput placeholder="输入商家,品类,商圈" style={styles.topInputStyle} />
         </View>
-<Common/>
-       
+         <ScrollView showsVerticalScrollIndicator={false} style={{marginTop:20}}>
+          <FlatList
+            data={this.state.productList}
+            numColumns='2'
+            renderItem={({ item }) => <View style={styles.itemViewStyle}>
+              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+              <Text style={styles.shopNameStyle}>{item.productName}</Text>
+            </View>
+            }
+          />
+        </ScrollView>
       </View>
     );
   }
@@ -46,8 +83,6 @@ export default class ChanelDetail extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: 'center',
     backgroundColor: 'white'
   },
   // 导航栏
@@ -69,6 +104,25 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     backgroundColor: 'white',
     elevation: 3,
+  },
+  itemViewStyle: {
+    width: 150,
+    height: 160,
+    backgroundColor: "white",
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 4,
+    marginLeft: 20
+  },
+  shopNameStyle: {
+    textAlign: 'center',
+    marginTop: 5,
+    color: "#757575"
+  },
+  imageStyle: {
+    width: "100%",
+    height: 120,
+
   },
 
 });

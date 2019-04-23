@@ -9,7 +9,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-
+import baseUrl from '../Comment'
 var Dimensions = require('Dimensions');
 var screenW = Dimensions.get('window').width;
 class Riegister extends Component {
@@ -55,7 +55,7 @@ class Riegister extends Component {
                 "userAddress": this.state.userAddress,
             };
 
-            fetch('http://192.168.43.252:8080/user/registercode', {
+            fetch(baseUrl+'/user/registercode', {
                 method: 'POST',
                 async: true,
                 body: JSON.stringify(data),
@@ -106,7 +106,7 @@ class Riegister extends Component {
                 "phoneCodeTime": new Date().getTime()
             };
 
-            fetch('http://192.168.43.252:8080/user/register', {
+            fetch(baseUrl+'/user/register', {
                 method: 'POST',
                 async: true,
                 body: JSON.stringify(data),

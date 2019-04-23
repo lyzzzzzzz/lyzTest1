@@ -12,13 +12,9 @@ import GoodsDetail1 from "./home/goods/GoodsDetail1"
 import GoodsDetail2 from "./home/goods/GoodsDetail2"
 import GoodsDetail3 from "./home/goods/GoodsDetail3"
 import GoodsDetail4 from "./home/goods/GoodsDetail4"
-import Common from './home/Common'
+import KouhongDetail from './home/classify/KouhongDetail'
 import Riegister from './login/Riegister'
-//登陆跳转
-// const LoginStack = createStackNavigator({
-//     LoginScreen: LoginScreen,
-// }, { initialRouteName: "LoginScreen" ,
-// });
+
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -30,8 +26,8 @@ const HomeStack = createStackNavigator({
     GoodsDetail2:GoodsDetail2,
     GoodsDetail3:GoodsDetail3,
     GoodsDetail4:GoodsDetail4,
-    Common:Common,
     LoginScreen: LoginScreen,
+    KouhongDetail:KouhongDetail,
     Riegister:Riegister,
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
@@ -52,7 +48,6 @@ defaultNavigationOptions: {
 }
 });
 const RootStack = createSwitchNavigator({
-    // Login: LoginStack,
     Home: HomeStack,
 }, {
         initialRouteName: 'Home',

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ToastAndroid
 } from 'react-native';
+import baseUrl from '../Comment'
 var Dimensions = require('Dimensions');
 var screenW = Dimensions.get('window').width;
 var screenH = Dimensions.get('window').height;
@@ -53,7 +54,7 @@ class LoginScreen extends Component {
 
       var data = { "userPhone": this.state.userPhone, "userLoginpwd": this.state.userLoginpwd };
 
-      fetch('http://192.168.43.252:8080/user/login', {
+      fetch(baseUrl+'/user/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: new Headers({

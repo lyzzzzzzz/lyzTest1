@@ -9,7 +9,6 @@ import {
 import TabNavigator from 'react-native-tab-navigator';
 
 import Home from './home/Index';
-import Products from './home/Products';
 import Cart from './home/ShopCart';
 import My from './home/My';
 import Classify from './home/Classify';

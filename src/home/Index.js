@@ -12,24 +12,22 @@ import {
   FlatList
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import baseUrl from '../Comment'
 var Dimensions = require('Dimensions');
 var screenW = Dimensions.get('window').width;
-var screenH = Dimensions.get('window').height;
-var Recommend = require('./Recommend');
-var NewUpload = require('./NewUpload')
 export default class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {  
-      newUploadList:[],
-      recommendList:[]
+    this.state = {
+      newUploadList: [],
+      recommendList: []
     };
 
   }
 
-  componentDidMount=()=>{
+  componentDidMount = () => {
     //获取newUploadList
-    fetch('http://192.168.43.252:8080/product/selectProductByToday', {
+    fetch(baseUrl+'/product/selectProductByToday', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -40,15 +38,15 @@ export default class Index extends Component {
       .then((responseData) => {
         console.log('responseData');
         console.log(responseData)
-        if (responseData.length!=0) {
-        this.setState({newUploadList:responseData})
+        if (responseData.length != 0) {
+          this.setState({ newUploadList: responseData })
         } else {
           ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
         }
       });
 
- //获取recommendList
- fetch('http://192.168.43.252:8080/product/selectAllBySale', {
+    //获取recommendList
+    fetch(baseUrl+'/product/selectAllBySale', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -57,8 +55,8 @@ export default class Index extends Component {
       .then((response) => response.json())
       .catch(error => console.error('Error:', error))
       .then((responseData) => {
-        if (responseData.length!=0) {
-        this.setState({recommendList:responseData})
+        if (responseData.length != 0) {
+          this.setState({ recommendList: responseData })
         } else {
           ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
         }
@@ -179,29 +177,29 @@ export default class Index extends Component {
 
           {/* 精品推荐 */}
           {/* <Recommend efg={this.efg} /> */}
-          <Text style={{textAlign:'center',fontSize:18,marginBottom:20, color:"#C6C6C6",marginTop:30}}>精 / 品 / 推 / 荐</Text>
+          <Text style={{ textAlign: 'center', fontSize: 18, marginBottom: 20, color: "#C6C6C6", marginTop: 30 }}>精 / 品 / 推 / 荐</Text>
           <FlatList
-           data={this.state.recommendList}
+            data={this.state.recommendList}
             numColumns='2'
-            renderItem={({ item }) =>  <View style={styles.itemViewStyle}>
-            <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-            <Text style={styles.shopNameStyle}>{item.productName}</Text>
+            renderItem={({ item }) => <View style={styles.itemViewStyle}>
+              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+              <Text style={styles.shopNameStyle}>{item.productName}</Text>
             </View>
- }
- />
+            }
+          />
 
 
           {/* 每日上新 */}
           {/* <NewUpload/> */}
-           <Text style={{textAlign:'center',fontSize:18,marginBottom:20, color:"#C6C6C6",marginTop:30}}>每 / 日 / 上 / 新</Text>
+          <Text style={{ textAlign: 'center', fontSize: 18, marginBottom: 20, color: "#C6C6C6", marginTop: 30 }}>每 / 日 / 上 / 新</Text>
           <FlatList
-           data={this.state.newUploadList}
+            data={this.state.newUploadList}
             numColumns='2'
-            renderItem={({ item }) =>  <View style={styles.itemViewStyle}>
-            <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-            <Text style={styles.shopNameStyle}>{item.productName}</Text>
-        </View>
-          }
+            renderItem={({ item }) => <View style={styles.itemViewStyle}>
+              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+              <Text style={styles.shopNameStyle}>{item.productName}</Text>
+            </View>
+            }
           />
 
 
@@ -229,22 +227,22 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: "100%",
     height: 120,
-  
-},
-shopNameStyle: {
-  textAlign: 'center',
-  marginTop: 5,
-  color:"#757575"
-},
+
+  },
+  shopNameStyle: {
+    textAlign: 'center',
+    marginTop: 5,
+    color: "#757575"
+  },
   itemViewStyle: {
-    width:150,
-    height:160,
-    backgroundColor:"white",
-    marginTop:10,
-    marginBottom:10,
+    width: 150,
+    height: 160,
+    backgroundColor: "white",
+    marginTop: 10,
+    marginBottom: 10,
     elevation: 4,
-    alignItems:"center",
-    marginLeft:20
+    alignItems: "center",
+    marginLeft: 20
   },
   text: {
     fontSize: 30,
