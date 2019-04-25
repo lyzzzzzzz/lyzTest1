@@ -14,7 +14,10 @@ import GoodsDetail3 from "./home/goods/GoodsDetail3"
 import GoodsDetail4 from "./home/goods/GoodsDetail4"
 import KouhongDetail from './home/classify/KouhongDetail'
 import Riegister from './login/Riegister'
-
+import FendiDetail from './home/classify/FendiDetail'
+import YanyingDetail from './home/classify/YanyingDetail'
+import ZhexiaDetail from './home/classify/ZhexiaDetail'
+import SaihongDetail from './home/classify/SaihongDetail'
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -28,6 +31,10 @@ const HomeStack = createStackNavigator({
     GoodsDetail4:GoodsDetail4,
     LoginScreen: LoginScreen,
     KouhongDetail:KouhongDetail,
+    FendiDetail:FendiDetail,
+    YanyingDetail:YanyingDetail,
+    ZhexiaDetail:ZhexiaDetail,
+    SaihongDetail:SaihongDetail,
     Riegister:Riegister,
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {

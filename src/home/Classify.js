@@ -23,8 +23,34 @@ export default class Classify extends Component {
             .navigate('KouhongDetail')
     }
 
+    toFendiDetail = () => {
+        this
+            .props
+            .navigation
+            .navigate('FendiDetail')
+    }
 
 
+    toYanyingDetail = () => {
+        this
+            .props
+            .navigation
+            .navigate('YanyingDetail')
+    }
+
+    toZhexiaDetail = () => {
+        this
+            .props
+            .navigation
+            .navigate('ZhexiaDetail')
+    }
+
+    toSaihongDetail = () => {
+        this
+            .props
+            .navigation
+            .navigate('SaihongDetail')
+    }
 
 
     render() {
@@ -41,31 +67,42 @@ export default class Classify extends Component {
 
                         <View style={{ width: "80%", height: 100 }} >
                             <TouchableOpacity onPress={this.toKouhongDetail}>
-                            <ImageBackground source={require('../images/kouhong.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                                <ImageBackground source={require('../images/kouhong.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
                                     <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>口红</Text>
-                            </ImageBackground>
+                                </ImageBackground>
                             </TouchableOpacity>
                         </View>
 
                         <View style={{ width: "80%", height: 100, marginTop: 15 }}>
-                            <ImageBackground source={require('../images/fendi.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>粉底</Text>
-                            </ImageBackground>
+                            <TouchableOpacity onPress={this.toFendiDetail}>
+                                <ImageBackground source={require('../images/fendi.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>粉底</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
                         </View>
+
                         <View style={{ width: "80%", height: 100, marginTop: 15 }}>
-                            <ImageBackground source={require('../images/yanying.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>眼影</Text>
-                            </ImageBackground>
+                            <TouchableOpacity onPress={this.toYanyingDetail}>
+                                <ImageBackground source={require('../images/yanying.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>眼影</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
                         </View>
+
                         <View style={{ width: "80%", height: 100, marginTop: 15 }}>
-                            <ImageBackground source={require('../images/zhexia.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>遮瑕</Text>
-                            </ImageBackground>
+                            <TouchableOpacity onPress={this.toZhexiaDetail}>
+                                <ImageBackground source={require('../images/zhexia.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>遮瑕</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
                         </View>
+
                         <View style={{ width: "80%", height: 100, marginBottom: 20, marginTop: 15 }}>
-                            <ImageBackground source={require('../images/zhijiayou.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>腮红</Text>
-                            </ImageBackground>
+                            <TouchableOpacity onPress={this.toSaihongDetail}>
+                                <ImageBackground source={require('../images/zhijiayou.png')} style={{ width: "100%", height: 100, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ color: "white", fontSize: 20, fontWeight: 'bold' }}>腮红</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
                         </View>
 
                     </View>

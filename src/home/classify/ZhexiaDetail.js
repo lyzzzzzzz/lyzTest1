@@ -13,14 +13,13 @@ import {
 } from 'react-native';
 import baseUrl from '../../Comment'
 var screenW = Dimensions.get('window').width;
-class KouhongDetail extends Component {
-
+class ZhexiaDetail extends Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: "#FFACAC",
     },
     headerTintColor: 'white',
-    headerTitle: "口红"
+    headerTitle: "遮瑕"
   };
 
 
@@ -33,7 +32,7 @@ class KouhongDetail extends Component {
 
   componentDidMount = () => {
     //获取商品列表
-    fetch(baseUrl + '/product/mySelectProductByType?productType=口红', {
+    fetch(baseUrl + '/product/mySelectProductByType?productType=遮瑕', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -49,8 +48,6 @@ class KouhongDetail extends Component {
         }
       });
   }
-
-
   render() {
     return (
       <View style={styles.container}>
@@ -73,7 +70,6 @@ class KouhongDetail extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -122,5 +118,4 @@ const styles = StyleSheet.create({
 
 });
 
-
-export default KouhongDetail;
+export default ZhexiaDetail;
