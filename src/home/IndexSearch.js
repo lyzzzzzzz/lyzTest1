@@ -11,30 +11,54 @@ import {
   ScrollView,
   FlatList
 } from 'react-native';
-import baseUrl from '../../Comment'
+import baseUrl from '../Comment'
 var screenW = Dimensions.get('window').width;
-class KouhongDetail extends Component {
 
-  static navigationOptions = {
-    headerStyle: {
-      backgroundColor: "#FFACAC",
-    },
-    headerTintColor: 'white',
-    headerTitle: "口红"
+class IndexSearch extends Component {
+
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerStyle: {
+        backgroundColor: "#FFACAC",
+        width: '100%'
+      },
+      headerTintColor: 'white',
+      headerTitle: (
+        <TextInput placeholder="搜索"
+          style={{ height: 35, backgroundColor: 'white', borderRadius: 18, paddingLeft: 10, width: 270 }}
+          onChangeText={navigation.getParam('setText')}
+          value={navigation.getParam('setText')}
+          
+        />
+      ),
+      headerRight: (
+        <TouchableOpacity onPress={navigation.getParam('getProductList')}  >
+          <Image source={require('../images/sc.png')} style={{ width: 24, height: 24, }} />
+        </TouchableOpacity>
+      )
+    }
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({ getProductList: this.searchText });
+    this.props.navigation.setParams({ setText: this.setText });
+    this.props.navigation.setParams({ text: this.state.text });
+  }
+
+  state = {
+    productList: [],
+    text: ''
+  };
+
+  setText = (text) => {
+    this.setState({ text: text });
   };
 
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      productList: [],
-      text:''
-    };
-  }
-
   searchText = () => {
     //获取商品列表
-    fetch(baseUrl + '/product/SelectProductBaseType?productType=口红&searchText=' + this.state.text, {
+    fetch(baseUrl + '/product/SelectProductByTypeOrNameOrBrand?search=' + this.state.text, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -51,50 +75,14 @@ class KouhongDetail extends Component {
       });
   }
 
-  componentDidMount = () => {
-  this.searchAll()
-  }
 
-  searchAll=()=>{
-  //获取商品列表
-  fetch(baseUrl + '/product/mySelectProductByType?productType=口红', {
-    method: 'GET',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    })
-  })
-    .then((response) => response.json())
-    .catch(error => console.error('Error:', error))
-    .then((responseData) => {
-      if (responseData.length != 0) {
-        this.setState({ productList: responseData })
-      } else {
-        ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
-      }
-    });
-  }
 
 
   render() {
     return (
       <View style={styles.container}>
         {/* 搜索框 */}
-        <View style={styles.navBarStyle}>
-        <TextInput
-            placeholder="搜索"
-            style={styles.topInputStyle}
-            value={this.state.text}
-            onChangeText={(text) => { this.setState({ text }) }} />
-
-          <TouchableOpacity style={{ marginLeft: 10 }} onPress={this.searchText}>
-            <Image source={require('../../images/pinkSearch.png')} style={{ width: 35, height: 35, }} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={{ marginLeft: 10 }} onPress={this.searchAll}>
-            <Text>全部</Text>
-          </TouchableOpacity>
-        </View>
-         <ScrollView showsVerticalScrollIndicator={false} style={{marginTop:20}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 20 }}>
           <FlatList
             data={this.state.productList}
             numColumns='2'
@@ -116,18 +104,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
+  imageStyle: {
+    width: "100%",
+    height: 120,
+
+  },
   // 导航栏
   navBarStyle: {
     height: Platform.OS === 'ios' ? 64 : 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: 10,
-    justifyContent: 'center'
+    marginTop: 10
   },
   // 搜索框
   topInputStyle: {
-    width: screenW * 0.6,
+    width: screenW * 0.71,
     height: Platform.OS === 'ios' ? 35 : 35,
     backgroundColor: 'white',
     marginTop: Platform.OS === 'ios' ? 18 : 0,
@@ -151,13 +143,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: "#757575"
   },
-  imageStyle: {
-    width: "100%",
-    height: 120,
-
-  },
 
 });
 
 
-export default KouhongDetail;
+export default IndexSearch;

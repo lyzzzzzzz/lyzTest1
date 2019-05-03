@@ -64,18 +64,26 @@ export default class Index extends Component {
 
   }
 
+
+  toIndexSearch = () => {
+    this
+      .props
+      .navigation
+      .navigate('IndexSearch')
+  }
+
   // 首页的导航条
   renderNavBar() {
     return (
       <View style={styles.navBarStyle}>
-        <TouchableOpacity onPress={() => { this.pushToDetail() }} >
+        {/* <TouchableOpacity onPress={() => { this.pushToDetail() }} > */}
           <Text style={styles.leftTitleStyle}>广州</Text>
-        </TouchableOpacity>
-        <TextInput placeholder="输入商家,品类,商圈" style={styles.topInputStyle} />
+        {/* </TouchableOpacity> */}
+        <TextInput placeholder="搜索" style={styles.topInputStyle} onFocus={this.toIndexSearch}/>
         <View style={styles.rightNavViewStyle}>
-          <TouchableOpacity onPress={() => { alert('点击了') }} >
+          {/* <TouchableOpacity onPress={() => { alert('点击了') }} > */}
             <Image source={require('../images/sc.png')} style={styles.navRightImgStyle} />
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
         </View>
       </View>
     )

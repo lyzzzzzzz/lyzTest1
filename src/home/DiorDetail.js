@@ -27,13 +27,38 @@ export default class DiorDetail extends Component {
     super(props);
     this.state = {
       productList: [],
+      text: ''
     };
 
   }
 
   componentDidMount = () => {
+    this.searchAll()
+  }
+
+
+  searchAll = () => {
     //获取商品列表
     fetch(baseUrl + '/product/selectProductByBrand?product_brand=dior', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+      .then((response) => response.json())
+      .catch(error => console.error('Error:', error))
+      .then((responseData) => {
+        if (responseData.length != 0) {
+          this.setState({ productList: responseData })
+        } else {
+          ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
+        }
+      });
+  }
+
+  searchText = () => {
+    //获取商品列表
+    fetch(baseUrl + '/product/SelectProductBaseBrand?productBrand=dior&searchText=' + this.state.text, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -56,7 +81,20 @@ export default class DiorDetail extends Component {
       <View style={styles.container}>
         {/* 搜索框 */}
         <View style={styles.navBarStyle}>
-          <TextInput placeholder="输入商家,品类,商圈" style={styles.topInputStyle} />
+          <TextInput
+            placeholder="搜索"
+            style={styles.topInputStyle}
+            value={this.state.text}
+            onChangeText={(text) => { this.setState({ text }) }} />
+
+          <TouchableOpacity style={{ marginLeft: 10 }} onPress={this.searchText}>
+            <Image source={require('../images/pinkSearch.png')} style={{ width: 35, height: 35, }} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{ marginLeft: 10 }} onPress={this.searchAll}>
+            <Text>全部</Text>
+          </TouchableOpacity>
+
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 20 }}>
           <FlatList
@@ -96,11 +134,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'center'
   },
   // 搜索框
   topInputStyle: {
-    width: screenW * 0.71,
+    width: screenW * 0.6,
     height: Platform.OS === 'ios' ? 35 : 35,
     backgroundColor: 'white',
     marginTop: Platform.OS === 'ios' ? 18 : 0,

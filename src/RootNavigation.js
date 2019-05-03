@@ -18,6 +18,7 @@ import FendiDetail from './home/classify/FendiDetail'
 import YanyingDetail from './home/classify/YanyingDetail'
 import ZhexiaDetail from './home/classify/ZhexiaDetail'
 import SaihongDetail from './home/classify/SaihongDetail'
+import IndexSearch from './home/IndexSearch'
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -35,6 +36,7 @@ const HomeStack = createStackNavigator({
     YanyingDetail:YanyingDetail,
     ZhexiaDetail:ZhexiaDetail,
     SaihongDetail:SaihongDetail,
+    IndexSearch:IndexSearch,
     Riegister:Riegister,
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
