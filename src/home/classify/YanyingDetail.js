@@ -27,7 +27,7 @@ class YanyingDetail extends Component {
     super(props);
     this.state = {
       productList: [],
-      text:''
+      text: ''
     };
   }
 
@@ -51,11 +51,11 @@ class YanyingDetail extends Component {
   }
 
   componentDidMount = () => {
-   this.searchAll()
+    this.searchAll()
   }
 
 
-  searchAll=()=>{
+  searchAll = () => {
     //获取商品列表
     fetch(baseUrl + '/product/mySelectProductByType?productType=眼影', {
       method: 'GET',
@@ -74,12 +74,21 @@ class YanyingDetail extends Component {
       });
   }
 
+  toProductDetail = (item) => {
+    this
+      .props
+      .navigation
+      .navigate('GoodsDetail1', { item: item })
+  }
+
+
+
   render() {
     return (
       <View style={styles.container}>
         {/* 搜索框 */}
         <View style={styles.navBarStyle}>
-        <TextInput
+          <TextInput
             placeholder="搜索"
             style={styles.topInputStyle}
             value={this.state.text}
@@ -93,14 +102,16 @@ class YanyingDetail extends Component {
             <Text>全部</Text>
           </TouchableOpacity>
         </View>
-         <ScrollView showsVerticalScrollIndicator={false} style={{marginTop:20}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 20 }}>
           <FlatList
             data={this.state.productList}
             numColumns='2'
-            renderItem={({ item }) => <View style={styles.itemViewStyle}>
-              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-              <Text style={styles.shopNameStyle}>{item.productName}</Text>
-            </View>
+            renderItem={({ item }) => <TouchableOpacity onPress={() => this.toProductDetail(item)}>
+              <View style={styles.itemViewStyle}>
+                <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+                <Text style={styles.shopNameStyle}>{item.productName}</Text>
+              </View>
+            </TouchableOpacity>
             }
           />
         </ScrollView>

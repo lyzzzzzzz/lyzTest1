@@ -6,7 +6,9 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  ToastAndroid
+  ToastAndroid,
+  AsyncStorage
+
 } from 'react-native';
 import baseUrl from '../Comment'
 var Dimensions = require('Dimensions');
@@ -28,7 +30,9 @@ class LoginScreen extends Component {
     super(props);
     this.state = {
       userPhone: '',
-      userLoginpwd: ''
+      userLoginpwd: '',
+      isLogin:false,
+      userObj:undefined
     };
   }
 
@@ -64,13 +68,21 @@ class LoginScreen extends Component {
         .then((response) => response.json())
         .catch(error => console.error('Error:', error))
         .then((responseData) => {
-          console.log('responseData');
-          console.log(responseData.code)
-          if (responseData.code === '101') {
+          if (responseData!=null) {
+            this.setState({isLogin:true})
+            let tempObj={}
+            tempObj=responseData
+            tempObj.isLogin=this.state.isLogin
+            AsyncStorage.setItem('user',JSON.stringify(tempObj),function(errs){
+              if(errs){
+                ToastAndroid.show("数据保存失败!", ToastAndroid.SHORT);
+              }
+            })
             this
               .props
               .navigation
               .goBack()
+              ToastAndroid.show("登录成功!", ToastAndroid.SHORT);
           } else {
             ToastAndroid.show("电话号码或密码错误!", ToastAndroid.SHORT);
           }
@@ -80,7 +92,6 @@ class LoginScreen extends Component {
 
 
   }
-
 
 
 

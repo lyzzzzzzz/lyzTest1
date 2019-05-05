@@ -27,7 +27,7 @@ export default class Index extends Component {
 
   componentDidMount = () => {
     //获取newUploadList
-    fetch(baseUrl+'/product/selectProductByToday', {
+    fetch(baseUrl + '/product/selectProductByToday', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -46,21 +46,21 @@ export default class Index extends Component {
       });
 
     //获取recommendList
-    fetch(baseUrl+'/product/selectAllBySale', {
+    fetch(baseUrl + '/product/selectAllBySale', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
       })
     })
       .then((response) => response.json())
-      .catch(error => console.error('Error:', error))
       .then((responseData) => {
         if (responseData.length != 0) {
           this.setState({ recommendList: responseData })
         } else {
           ToastAndroid.show("没有数据!", ToastAndroid.SHORT);
         }
-      });
+      })
+      .catch(error => console.error('Error:', error))
 
   }
 
@@ -76,14 +76,10 @@ export default class Index extends Component {
   renderNavBar() {
     return (
       <View style={styles.navBarStyle}>
-        {/* <TouchableOpacity onPress={() => { this.pushToDetail() }} > */}
-          <Text style={styles.leftTitleStyle}>广州</Text>
-        {/* </TouchableOpacity> */}
-        <TextInput placeholder="搜索" style={styles.topInputStyle} onFocus={this.toIndexSearch}/>
+        <Text style={styles.leftTitleStyle}>广州</Text>
+        <TextInput placeholder="搜索" style={styles.topInputStyle} onFocus={this.toIndexSearch} />
         <View style={styles.rightNavViewStyle}>
-          {/* <TouchableOpacity onPress={() => { alert('点击了') }} > */}
-            <Image source={require('../images/sc.png')} style={styles.navRightImgStyle} />
-          {/* </TouchableOpacity> */}
+          <Image source={require('../images/sc.png')} style={styles.navRightImgStyle} />
         </View>
       </View>
     )
@@ -115,6 +111,13 @@ export default class Index extends Component {
       .props
       .navigation
       .navigate('ChanelScreen')
+  }
+
+  toProductDetail = (item) => {
+    this
+      .props
+      .navigation
+      .navigate('GoodsDetail1', { item: item })
   }
 
 
@@ -184,15 +187,16 @@ export default class Index extends Component {
           </View>
 
           {/* 精品推荐 */}
-          {/* <Recommend efg={this.efg} /> */}
           <Text style={{ textAlign: 'center', fontSize: 18, marginBottom: 20, color: "#C6C6C6", marginTop: 30 }}>精 / 品 / 推 / 荐</Text>
           <FlatList
             data={this.state.recommendList}
             numColumns='2'
-            renderItem={({ item }) => <View style={styles.itemViewStyle}>
-              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-              <Text style={styles.shopNameStyle}>{item.productName}</Text>
-            </View>
+            renderItem={({ item }) => <TouchableOpacity onPress={() => this.toProductDetail(item)}>
+              <View style={styles.itemViewStyle} >
+                <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+                <Text style={styles.shopNameStyle}>{item.productName}</Text>
+              </View>
+            </TouchableOpacity>
             }
           />
 
@@ -203,10 +207,12 @@ export default class Index extends Component {
           <FlatList
             data={this.state.newUploadList}
             numColumns='2'
-            renderItem={({ item }) => <View style={styles.itemViewStyle}>
-              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-              <Text style={styles.shopNameStyle}>{item.productName}</Text>
-            </View>
+            renderItem={({ item }) => <TouchableOpacity onPress={() => this.toProductDetail(item)}>
+              <View style={styles.itemViewStyle}>
+                <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+                <Text style={styles.shopNameStyle}>{item.productName}</Text>
+              </View>
+            </TouchableOpacity>
             }
           />
 

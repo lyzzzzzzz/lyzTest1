@@ -75,6 +75,12 @@ export default class DiorDetail extends Component {
       });
   }
 
+  toProductDetail = (item) => {
+    this
+      .props
+      .navigation
+      .navigate('GoodsDetail1', { item: item })
+  }
 
   render() {
     return (
@@ -100,10 +106,12 @@ export default class DiorDetail extends Component {
           <FlatList
             data={this.state.productList}
             numColumns='2'
-            renderItem={({ item }) => <View style={styles.itemViewStyle}>
-              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-              <Text style={styles.shopNameStyle}>{item.productName}</Text>
-            </View>
+            renderItem={({ item }) => <TouchableOpacity onPress={() => this.toProductDetail(item)}>
+              <View style={styles.itemViewStyle}>
+                <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+                <Text style={styles.shopNameStyle}>{item.productName}</Text>
+              </View>
+            </TouchableOpacity>
             }
           />
         </ScrollView>

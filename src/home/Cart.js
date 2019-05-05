@@ -14,9 +14,6 @@ import {
     Alert,
     SectionList
 } from 'react-native';
-import { State } from 'react-native-gesture-handler';
-
-
 
 export default Cart;
 
@@ -40,10 +37,6 @@ class Cart extends Component {
 
 
     render() {
-
-        //    let goodsView=(<Text>ddddddddddddddd</Text>)
-
-
 
 
         return (
@@ -76,96 +69,15 @@ class Cart extends Component {
                         </View>
 
                         <FlatList
-                            style={{ width: '100%'}}
+                            style={{ width: '100%' }}
                             data={[{ name: '眼影', colorNum: '#18' }, { name: '粉底', colorNum: '#18' }]}
                             renderItem={({ item }) =>
-                                <View style={styles.goongs}>
+                                <View style={styles.goods}>
                                     <Text>{item.name}</Text>
                                 </View>
 
                             }
                         />
-
-
-                        {/* <View style={styles.addr}>
-                            <FlatList
-                                style={{ width: '95%', }}
-                                data={[{ name: '眼影', colorNum: '#18' }, { name: '粉底', colorNum: '#18' }]}
-                                renderItem={({ item }) =>
-                                    <View style={{ width: '100%', height: 100, elevation: 5, backgroundColor: 'white',}}>
-                                        <Text>{item.name}</Text>
-                                    </View>
-
-                                }
-                            />
-
-                        </View> */}
-
-
-                        {/* {goodsView} */}
-
-                        {/* <FlatList
-                            data={[{ key: 'a' }, { key: 'b' }]}
-                            renderItem={({ item }) => <Text>{item.key}</Text>}
-                        /> */}
-
-                        {/* 
-
-                        <View style={styles.itemViewStyle}>
-                            <Image source={require('../images/p5.png')} style={styles.imageStyle} />
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.clothNameStyle}>百塔高领针织衫</Text>
-                                    <Text style={styles.clothPayStyle}>$98</Text>
-                                </View>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.shopNameStyle}>优衣库旗舰店</Text>
-                                </View>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.shopNameStyle}>均码</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={styles.inputStyle}>
-                                        <TextInput style={styles.input1} editable={false} value='-' />
-                                        <TextInput style={styles.middleInput} />
-                                        <TextInput value='+' style={styles.input2} editable={false} />
-                                    </View>
-                                    <View style={styles.itemViewStyle}>
-                                        <Text style={styles.delete}>×</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-
-                        <View style={styles.itemViewStyle2}>
-                            <Image source={require('../images/p5.png')} style={styles.imageStyle} />
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.clothNameStyle}>百塔高领针织衫2</Text>
-                                    <Text style={styles.clothPayStyle}>$98</Text>
-                                </View>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.shopNameStyle}>优衣库旗舰店</Text>
-                                </View>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.shopNameStyle}>L</Text>
-                                </View>
-                            </View>
-                        </View> */}
-
-                        {/* <View style={styles.itemViewStyle2}>
-                            <Image source={require('../images/p5.png')} style={styles.imageStyle} />
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.clothNameStyle}>百塔高领针织衫3</Text>
-                                    <Text style={styles.clothPayStyle}>$98</Text>
-                                </View>
-                                <View style={styles.itemViewStyle}>
-                                    <Text style={styles.shopNameStyle}>优衣库旗舰店</Text>
-                                </View>
-                            </View>
-                        </View> */}
-
 
 
                     </View>
@@ -201,15 +113,15 @@ const styles = StyleSheet.create({
     },
 
 
-    goongs: {
+    goods: {
         width: '95%',
         height: 130,
         backgroundColor: 'white',
         marginTop: 2,
         elevation: 5,
-      marginBottom:1,
-       marginLeft:10
-       
+        marginBottom: 1,
+        marginLeft: 10
+
 
     },
 
