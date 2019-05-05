@@ -9,9 +9,6 @@ import YSLScreen from "./home/YslDetail"
 import MacScreen from "./home/MacDetail"
 import ChanelScreen from "./home/ChanelDetail"
 import GoodsDetail1 from "./home/goods/GoodsDetail1"
-import GoodsDetail2 from "./home/goods/GoodsDetail2"
-import GoodsDetail3 from "./home/goods/GoodsDetail3"
-import GoodsDetail4 from "./home/goods/GoodsDetail4"
 import KouhongDetail from './home/classify/KouhongDetail'
 import Riegister from './login/Riegister'
 import FendiDetail from './home/classify/FendiDetail'
@@ -27,9 +24,6 @@ const HomeStack = createStackNavigator({
     MacScreen:MacScreen,
     ChanelScreen:ChanelScreen,
     GoodsDetail1:GoodsDetail1,
-    GoodsDetail2:GoodsDetail2,
-    GoodsDetail3:GoodsDetail3,
-    GoodsDetail4:GoodsDetail4,
     LoginScreen: LoginScreen,
     KouhongDetail:KouhongDetail,
     FendiDetail:FendiDetail,
