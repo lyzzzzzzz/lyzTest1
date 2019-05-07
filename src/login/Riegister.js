@@ -232,7 +232,7 @@ class Riegister extends Component {
                     }}
                     onPress={this.toRegister}
                 >
-                    <Text style={{ color: 'white', fontSize: 18 }} >登录</Text>
+                    <Text style={{ color: 'white', fontSize: 18 }} >注册</Text>
                 </TouchableOpacity>
 
 
