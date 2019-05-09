@@ -9,7 +9,8 @@ import {
 	TouchableOpacity,
 	Button,
 	ToastAndroid,
-	AsyncStorage
+	AsyncStorage,
+	DeviceEventEmitter
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 var Dimensions = require('Dimensions');
@@ -74,6 +75,8 @@ class GoodsDetail1 extends Component {
 			.then((responseData) => {
 				if (responseData>0) {
 					ToastAndroid.show("添加成功，在购物车等待~", ToastAndroid.SHORT);
+					const message = '监听';
+					DeviceEventEmitter.emit('insertIntoShopCar',message);
 				} else {
 					ToastAndroid.show("加入购物车失败!", ToastAndroid.SHORT);
 				}
@@ -87,7 +90,8 @@ class GoodsDetail1 extends Component {
 		const item = navigation.getParam('item');
 		return (
 			<View style={styles.container}>
-				<ScrollView showsVerticalScrollIndicator={false}>
+				<ScrollView showsVerticalScrollIndicator={false} >
+				<View style={{flexDirection:'column',alignItems:'center'}}>
 					<View style={{ width: screenW, height: screenH * 0.45, marginBottom: 5 }}>
 						<Swiper
 							style={styles.swiper}          //样式
@@ -127,20 +131,21 @@ class GoodsDetail1 extends Component {
 						</Swiper>
 					</View>
 
-					<View style={{ backgroundColor: 'white' }}>
+					<View style={{backgroundColor: '#F4F8F8',width:'95%',marginTop: 10,elevation: 0.5}}>
 						{/* <h2>￥{this.state.produst.money}</h2> */}
 						<Text style={{ color: 'red', fontSize: 20, fontWeight: 'bold', }}>￥{item.productPrice}</Text>
-						<View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-							<Text style={{ fontSize: 18, color: 'black', fontFamily: '宋体' }}>{item.productName}</Text>
-							<Text style={{ fontSize: 18, color: 'black', fontFamily: '宋体', marginLeft: 5, }}>{item.productColor}</Text>
-							<Text style={{ fontSize: 18, color: 'black', fontFamily: '宋体', marginLeft: 5, }}>{item.productCapicity}</Text>
+						<View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' ,width:'100%'}}>
+							<Text style={{ fontSize: 18, color: 'black', fontFamily: '宋体',marginRight:5 }}>{item.productName}</Text>
+							<Text style={{ fontSize: 18, color: 'black', fontFamily: '宋体',marginRight:5   }}>{item.productColor}</Text>
+							<Text style={{ fontSize: 18, color: 'black', fontFamily: '宋体',  }}>{item.productCapicity}</Text>
 						</View>
 
 					</View>
 
-					<View style={{ width: screenW, backgroundColor: 'white', marginTop: 10, minHeight: 215 }}>
-						<Text style={{ fontSize: 16 }}>{item.productDescribe}</Text>
+					<View style={{ width: '95%', backgroundColor: '#F8F8F8', marginTop: 20, minHeight: 215,marginBottom:20 ,elevation: 1}}>
+						<Text style={{ fontSize: 16,lineHeight:30 }} >{item.productDescribe}</Text>
 
+					</View>
 					</View>
 				</ScrollView>
 				<View style={{ width: screenW, height: 50, backgroundColor: '#FFACAC', display: 'flex', flexDirection: 'row' }}>
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: "column",
 		flex: 1,
-		backgroundColor: '#F1F5F7'
+		backgroundColor: 'white'
 	},
 });
 
