@@ -14,7 +14,8 @@ import {
 	Alert,
 	SectionList,
 	AsyncStorage,
-	DeviceEventEmitter
+	DeviceEventEmitter,
+	Button
 } from 'react-native';
 import baseUrl from '../Comment'
 import CheckBox from 'react-native-check-box'
@@ -31,7 +32,11 @@ class Cart extends Component {
 			productList: [],
 			userObj: undefined,
 			isCheckedAll: false,
-			result: undefined
+			result: undefined,
+			tatalPrize: 0,
+			isManage: false,
+			manage:'管理',
+			checkedList:[]
 		};
 	}
 
@@ -96,16 +101,21 @@ class Cart extends Component {
 		item.ischecked = item.ischecked === 0 ? 1 : 0;//改变选中的那个的值
 		this.setState({//重新渲染
 			productList: this.state.productList,
+			tatalPrize: item.ischecked === 1 ? this.state.tatalPrize + item.productPrice : this.state.tatalPrize - item.productPrice
 		})
 
 		let productList = this.state.productList
 		let productListCheck = []
 		let checkedAllList = []
+		let checkedList=[]
 		for (let i = 0; i < productList.length; i++) {
 			productListCheck.push(productList[i].ischecked)
+			if(productList[i].ischecked===1){
+				checkedList.push(productList[i].shopCar.shopcarId)
+			}
 			checkedAllList.push(1)
 		}
-
+    this.setState({checkedList:checkedList})
 		if (productListCheck.toString() == checkedAllList.toString()) {
 			this.setState({ isCheckedAll: true })
 		} else {
@@ -122,16 +132,15 @@ class Cart extends Component {
 		});
 		this.setState({//重新渲染
 			productList: productList,
-
 		})
 	}
 
-	reduceProductNum=(shopCar,action)=>{
-		let productNum=shopCar.productNum
+	reduceProductNum = (shopCar, action) => {
+		let productNum = shopCar.productNum
 		if (productNum === 1) {
 			return
 		}
-		fetch(baseUrl + '/shopCar/'+action+'?productId=' + shopCar.productId + '&userId=' + shopCar.userId + '&productNum=' + 1, {
+		fetch(baseUrl + '/shopCar/' + action + '?productId=' + shopCar.productId + '&userId=' + shopCar.userId + '&productNum=' + 1, {
 			method: 'POST',
 			headers: new Headers({
 				'Content-Type': 'application/json'
@@ -140,7 +149,7 @@ class Cart extends Component {
 			.then((response) => response.json())
 			.catch(error => console.error('Error:', error))
 			.then((responseData) => {
-				if (responseData>0) {
+				if (responseData > 0) {
 					fetch(baseUrl + '/product/selectProductByUserId?userId=' + shopCar.userId, {
 						method: 'GET',
 						headers: new Headers({
@@ -160,7 +169,62 @@ class Cart extends Component {
 					ToastAndroid.show("出错了!", ToastAndroid.SHORT);
 				}
 			});
-		
+
+
+	}
+
+	clickManage = () => {
+		this.setState({ isManage: this.state.isManage?false:true,manage:this.state.manage==='管理'?'完成':'管理' })
+	}
+
+	clickDelete=()=>{
+
+		Alert.alert(
+			'',
+		'确定删除吗?',
+			[
+				{text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+				{text: '确认', onPress: () =>{
+					let result=JSON.parse(this.state.result)
+					let userid=result.userId
+					fetch(baseUrl + '/shopCar/batchDeleteByIds?array='+this.state.checkedList, {
+						method: 'DELETE',
+						headers: new Headers({
+							'Content-Type': 'application/json'
+						})
+					})
+						.then((response) => response.json())
+						.catch(error => console.error('Error:', error))
+						.then((responseData) => {
+							if (responseData > 0) {
+							
+								fetch(baseUrl + '/product/selectProductByUserId?userId=' + userid, {
+									method: 'GET',
+									headers: new Headers({
+										'Content-Type': 'application/json'
+									})
+								})
+									.then((response) => response.json())
+									.catch(error => console.error('Error:', error))
+									.then((responseData) => {
+										if (responseData.length != 0) {
+											this.setState({ productList: responseData })
+										} else {
+											ToastAndroid.show("出错了!", ToastAndroid.SHORT);
+										}
+									});
+			
+							} else {
+								ToastAndroid.show("出错了!", ToastAndroid.SHORT);
+							}
+						});
+				}},
+			],
+			{ cancelable: false }
+		)
+
+
+
 
 	}
 
@@ -171,8 +235,9 @@ class Cart extends Component {
 
 		return (
 			<View style={{ flexDirection: 'column', justifyContent: 'space-between', display: 'flex', flex: 1 }}>
-				<View style={{ width: '100%', height: 50, backgroundColor: '#FFACAC', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-					<Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>购物车</Text>
+				<View style={{ width: '100%', height: 50, backgroundColor: '#FFACAC', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+					<Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold', marginLeft: 150 }}>购物车</Text>
+					<Text style={{ color: 'white', fontSize: 18, marginRight: 10 }} onPress={this.clickManage}>{this.state.manage}</Text>
 				</View>
 
 
@@ -202,8 +267,8 @@ class Cart extends Component {
 							style={{ width: '100%' }}
 							data={this.state.productList}
 							renderItem={({ item }) => {
-								let productNum=item.shopCar.productNum
-								let shopCar=item.shopCar
+								let productNum = item.shopCar.productNum
+								let shopCar = item.shopCar
 								return (
 									<View style={styles.goods}>
 										{this.checkBoxView(item)}
@@ -219,13 +284,13 @@ class Cart extends Component {
 											<View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 210, alignItems: 'center' }}>
 												<Text style={{ color: 'red' }}>￥{item.productPrice}</Text>
 												<View style={styles.numStyle}>
-													<TouchableOpacity style={{ width: 20, }} onPress={()=>this.reduceProductNum(shopCar,'reduceShopCar')}>
+													<TouchableOpacity style={{ width: 20, }} onPress={() => this.reduceProductNum(shopCar, 'reduceShopCar')}>
 														<Text style={{ textAlign: 'center' }}>-</Text>
 													</TouchableOpacity>
 
 													<Text style={{ width: 28, textAlign: 'center' }}>{productNum}</Text>
 
-													<TouchableOpacity style={{ width: 20, }} onPress={()=>this.reduceProductNum(shopCar,'addShopCar')}>
+													<TouchableOpacity style={{ width: 20, }} onPress={() => this.reduceProductNum(shopCar, 'addShopCar')}>
 														<Text style={{ textAlign: 'center' }}>+</Text>
 													</TouchableOpacity>
 												</View>
@@ -243,8 +308,8 @@ class Cart extends Component {
 
 				</ScrollView>
 
-				<View style={{ width: '100%', height: 50, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5, }}>
-					<View style={{ flexDirection: 'row' }}>
+				<View style={styles.bottomTab}>
+					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<CheckBox
 							onClick={this.onClickCheckAll}
 							isChecked={this.state.isCheckedAll}
@@ -253,6 +318,23 @@ class Cart extends Component {
 						/>
 						<Text style={{ marginLeft: 10 }}>全选</Text>
 					</View>
+
+					{
+						this.state.isManage ? <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+							<TouchableOpacity style={styles.settlement} onPress={this.clickDelete}>
+								<Text style={{ color: 'white', fontWeight: 'bold' }}>删除</Text>
+							</TouchableOpacity>
+						</View> : <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+								<Text style={{ color: 'black' }}>合计:</Text>
+								<Text style={{ color: 'red' }}>￥{this.state.tatalPrize}</Text>
+								<View style={styles.settlement}>
+									<Text style={{ color: 'white', fontWeight: 'bold' }}>结算</Text>
+								</View>
+							</View>
+					}
+
+
+
 				</View>
 
 
@@ -271,6 +353,27 @@ const styles = StyleSheet.create({
 		width: 260,
 		alignItems: 'center',
 		backgroundColor: '#2196F3'
+	},
+	bottomTab: {
+		width: '100%',
+		height: 50,
+		backgroundColor: 'white',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		elevation: 5,
+		paddingLeft: 10,
+		paddingRight: 10
+	},
+	settlement: {
+		width: 50,
+		height: 30,
+		backgroundColor: '#571D0C',
+		marginLeft: 10,
+		borderRadius: 3,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	buttonText: {
 		padding: 20,
