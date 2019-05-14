@@ -26,9 +26,9 @@ class Cart extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			address: '广东省肇庆市怀集县凤岗镇桃花村委会vvvvvvvvvv',
-			name: '李雅真',
-			phone: '17724272471',
+			// address: '广东省肇庆市怀集县凤岗镇桃花村委会vvvvvvvvvv',
+			// name: '李雅真',
+			// phone: '17724272471',
 			productList: [],
 			userObj: undefined,
 			isCheckedAll: false,
@@ -42,14 +42,13 @@ class Cart extends Component {
 
 
 	componentDidMount = () => {
-
 		var that = this;
-		AsyncStorage.getItem('user', function (errs, result) {
+		AsyncStorage.getItem('user',  (errs, result) =>{
 			if (errs) {
 				alert('获取user错误!')
 			} else {
-				that.setState({ result: result })
-				that.fetchProductList(result)
+				that.setState({ result: JSON.parse(result) })
+				that.fetchProductList(JSON.parse(result))
 			}
 		})
 		that.listener = DeviceEventEmitter.addListener('insertIntoShopCar', (message) => {
@@ -60,6 +59,7 @@ class Cart extends Component {
 	}
 
 
+
 	componentWillUnmount() {
 		//移除监听
 		if (this.listener) {
@@ -68,8 +68,7 @@ class Cart extends Component {
 	}
 
 	fetchProductList = (result) => {
-		let userItem = JSON.parse(result)
-		fetch(baseUrl + '/product/selectProductByUserId?userId=' + userItem.userId, {
+		fetch(baseUrl + '/product/selectProductByUserId?userId=' + result.userId, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json'
@@ -232,7 +231,7 @@ class Cart extends Component {
 
 
 	render() {
-
+		let userMsg=this.state.result;
 		return (
 			<View style={{ flexDirection: 'column', justifyContent: 'space-between', display: 'flex', flex: 1 }}>
 				<View style={{ width: '100%', height: 50, backgroundColor: '#FFACAC', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -252,9 +251,9 @@ class Cart extends Component {
 							<View style={{ width: '100%', height: 2, backgroundColor: '#F0F0F0' }}></View>
 							<View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%', }}>
 								<View style={{ width: '80%', height: 90, flexDirection: 'column', justifyContent: 'space-around', marginLeft: 5 }}>
-									<Text style={{ fontSize: 16, color: '#571D0C' }}>{this.state.address}</Text>
-									<Text style={{ fontSize: 15 }}>{this.state.name}</Text>
-									<Text style={{ fontSize: 15 }}>{this.state.phone}</Text>
+									<Text style={{ fontSize: 16, color: '#571D0C' }}>{userMsg==undefined?'':userMsg.userAddress}</Text>
+									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userName}</Text>
+									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userPhone}</Text>
 								</View>
 								<View style={{ width: '15%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
 									<Image source={require('../images/editAddr.png')}></Image>

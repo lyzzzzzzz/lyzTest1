@@ -32,7 +32,8 @@ class Riegister extends Component {
             userAddress: '',
             title: '获取验证码',
             timerCount: 60,
-            disabled: false
+            disabled: false,
+            userName:''
         };
     }
 
@@ -103,6 +104,7 @@ class Riegister extends Component {
                 "phoneCodeCode": this.state.code,
                 "userPaypwd": this.state.userPaypwd,
                 "userAddress": this.state.userAddress,
+                "userName":this.state.userName,
                 "phoneCodeTime": new Date().getTime()
             };
 
@@ -172,6 +174,18 @@ class Riegister extends Component {
                     >
                     </Button>
                 </View>
+
+
+                <View style={styles.input}>
+                    <Image source={require('../images/Password1.png')} style={{ width: 25, height: 25 }}></Image>
+                    <TextInput
+                        placeholder="昵称"
+                        style={{ width: 200, height: '100%', }}
+                        value={this.state.userName}
+                        onChangeText={(userName) => this.setState({ userName })}
+                    />
+                </View>
+
 
 
                 <View style={styles.input}>
