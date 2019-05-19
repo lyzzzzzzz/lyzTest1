@@ -16,6 +16,9 @@ import YanyingDetail from './home/classify/YanyingDetail'
 import ZhexiaDetail from './home/classify/ZhexiaDetail'
 import SaihongDetail from './home/classify/SaihongDetail'
 import IndexSearch from './home/IndexSearch'
+import UpdUserMsg from './home/UpdUserMsg'
+import NavigationService from './NavigationService'
+import My from './home/My'
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -32,6 +35,8 @@ const HomeStack = createStackNavigator({
     SaihongDetail:SaihongDetail,
     IndexSearch:IndexSearch,
     Riegister:Riegister,
+    UpdUserMsg:UpdUserMsg,
+    My:My
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
     headerStyle: {
@@ -54,7 +59,8 @@ const RootStack = createSwitchNavigator({
     Home: HomeStack,
 }, {
         initialRouteName: 'Home',
-        backBehavior:'none'
+        backBehavior:'none',
+
     });
 
  const AppContainer = createAppContainer(RootStack);
@@ -65,6 +71,7 @@ const RootStack = createSwitchNavigator({
      }
 
      render() {
-         return (<AppContainer />);
+         return (<AppContainer  ref={navigatorRef => {NavigationService.setTopLevelNavigator(navigatorRef);
+          }}/>);
      }
  }

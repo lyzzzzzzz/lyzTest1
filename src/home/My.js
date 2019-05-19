@@ -4,15 +4,21 @@ import {
   Text,
   View,
   Image,
-
+  AsyncStorage
 } from 'react-native';
-
+import NavigationService from '../NavigationService';
 export default class My extends Component{
   constructor() {
     super();
-
+    this.state = {
+			result: undefined,
+		};
   }
 
+
+	static navigationOptions = {
+		header: null,  //隐藏顶部导航栏
+	};
 
   toLogin=()=>{
     this
@@ -20,6 +26,24 @@ export default class My extends Component{
     .navigation
     .push('LoginScreen')
   }
+
+  toUpdUserMsg=()=>{
+    NavigationService.navigate('UpdUserMsg', { adrr: this.state.result });
+  }
+
+componentDidMount=()=>{
+  var that = this;
+  AsyncStorage.getItem('user',  (errs, result) =>{
+    console.log('=================result===================');
+    console.log(result);
+    console.log('====================================');
+    if (errs) {
+      alert('获取user错误!')
+    } else {
+      that.setState({ result: JSON.parse(result) })
+    }
+  })
+}
 
 
   render() {
@@ -34,7 +58,7 @@ export default class My extends Component{
              <Text style={{marginTop:10,color:'#7B0000',fontSize:18,fontWeight:'bold'}}>lyzzzzzzzzz</Text>
         </View>
         <View style={{marginTop:40}}>
-          <Text style={{marginBottom:3,marginLeft:10,fontSize:16}}>修改个人信息</Text>
+          <Text style={{marginBottom:3,marginLeft:10,fontSize:16}} onPress={this.toUpdUserMsg}>修改个人信息</Text>
           <View style={{height:2,backgroundColor:'#EFEFEF'}}></View>
         </View>
         {/* <View style={{marginTop:10}}>

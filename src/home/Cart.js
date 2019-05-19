@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import baseUrl from '../Comment'
 import CheckBox from 'react-native-check-box'
+import NavigationService from '../NavigationService';
 export default Cart;
 
 class Cart extends Component {
@@ -221,13 +222,11 @@ class Cart extends Component {
 			],
 			{ cancelable: false }
 		)
-
-
-
-
 	}
 
-
+	// toEditMsg=()=>{
+	// 	NavigationService.navigate('UpdUserMsg', { adrr: this.state.result });
+	// }
 
 
 	render() {
@@ -255,9 +254,9 @@ class Cart extends Component {
 									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userName}</Text>
 									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userPhone}</Text>
 								</View>
-								<View style={{ width: '15%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+								<TouchableOpacity style={styles.editAddr}>
 									<Image source={require('../images/editAddr.png')}></Image>
-								</View>
+								</TouchableOpacity>
 							</View>
 
 						</View>
@@ -497,6 +496,13 @@ const styles = StyleSheet.create({
 	inputStyle: {
 		flexDirection: 'row',
 		width: 180,
+	},
+	editAddr:{
+		width: '15%', 
+		height: 50, 
+		flexDirection: 'row', 
+		alignItems: 'center', 
+		justifyContent: 'flex-end'
 	}
 });
 

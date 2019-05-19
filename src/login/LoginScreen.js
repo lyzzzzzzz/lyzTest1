@@ -11,6 +11,7 @@ import {
 
 } from 'react-native';
 import baseUrl from '../Comment'
+// import NavigationService from '../NavigationService';
 var Dimensions = require('Dimensions');
 var screenW = Dimensions.get('window').width;
 var screenH = Dimensions.get('window').height;
@@ -31,8 +32,8 @@ class LoginScreen extends Component {
     this.state = {
       userPhone: '',
       userLoginpwd: '',
-      isLogin:false,
-      userObj:undefined
+      isLogin: false,
+      userObj: undefined
     };
   }
 
@@ -46,7 +47,7 @@ class LoginScreen extends Component {
 
 
   loginFetch = () => {
-    var myreg =/^[1][3,4,5,7,8][0-9]{9}$/;
+    var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
     if (this.state.userPhone === '' || this.state.userLoginpwd === '') {
       ToastAndroid.show("不能为空!", ToastAndroid.SHORT);
       return false;
@@ -57,8 +58,7 @@ class LoginScreen extends Component {
     } else {
 
       var data = { "userPhone": this.state.userPhone, "userLoginpwd": this.state.userLoginpwd };
-
-      fetch(baseUrl+'/user/login', {
+      fetch(baseUrl + '/user/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: new Headers({
@@ -68,23 +68,35 @@ class LoginScreen extends Component {
         .then((response) => response.json())
         .catch(error => console.error('Error:', error))
         .then((responseData) => {
-          if (responseData!=null) {
-            this.setState({isLogin:true})
-            let tempObj={}
-            tempObj=responseData
-            tempObj.isLogin=this.state.isLogin
-            AsyncStorage.setItem('user',JSON.stringify(tempObj),function(errs){
-              if(errs){
+          if (responseData.userId != null) {
+            this.setState({ isLogin: true })
+            let tempObj = {}
+            tempObj = responseData
+            tempObj.isLogin = this.state.isLogin
+            AsyncStorage.setItem('user', JSON.stringify(tempObj), function (errs) {
+              if (errs) {
                 ToastAndroid.show("数据保存失败!", ToastAndroid.SHORT);
               }
             })
+            // this
+            //   .props
+            //   .navigation
+            //   .push('My')
+
+            ToastAndroid.show("登录成功!", ToastAndroid.SHORT);
+            // this
+            //   .props
+            //   .navigation
+            //   .push('My')
+            //NavigationService.navigate('My',null);
+          } else {
+            this.setState({ isLogin: false })
+            ToastAndroid.show("登录失败!", ToastAndroid.SHORT);
+            // NavigationService.navigate('My');
             this
               .props
               .navigation
-              .goBack()
-              ToastAndroid.show("登录成功!", ToastAndroid.SHORT);
-          } else {
-            ToastAndroid.show("电话号码或密码错误!", ToastAndroid.SHORT);
+              .push('LoginScreen')
           }
         });
     }
