@@ -27,9 +27,6 @@ class Cart extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// address: '广东省肇庆市怀集县凤岗镇桃花村委会vvvvvvvvvv',
-			// name: '李雅真',
-			// phone: '17724272471',
 			productList: [],
 			userObj: undefined,
 			isCheckedAll: false,
@@ -224,9 +221,9 @@ class Cart extends Component {
 		)
 	}
 
-	// toEditMsg=()=>{
-	// 	NavigationService.navigate('UpdUserMsg', { adrr: this.state.result });
-	// }
+	toEditMsg=()=>{
+		NavigationService.navigate('addrDetail', { adrr: this.state.result });
+	}
 
 
 	render() {
@@ -248,16 +245,16 @@ class Cart extends Component {
 								<Text style={{ color: '#571D0C', fontSize: 17, marginLeft: 5 }}>收货地址</Text>
 							</View>
 							<View style={{ width: '100%', height: 2, backgroundColor: '#F0F0F0' }}></View>
-							<View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%', }}>
+							<TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%', }} onPress={this.toEditMsg}>
 								<View style={{ width: '80%', height: 90, flexDirection: 'column', justifyContent: 'space-around', marginLeft: 5 }}>
 									<Text style={{ fontSize: 16, color: '#571D0C' }}>{userMsg==undefined?'':userMsg.userAddress}</Text>
 									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userName}</Text>
 									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userPhone}</Text>
 								</View>
-								<TouchableOpacity style={styles.editAddr}>
-									<Image source={require('../images/editAddr.png')}></Image>
-								</TouchableOpacity>
-							</View>
+								<View style={styles.editAddr}>
+									<Image source={require('../images/jiantou.png')}></Image>
+								</View>
+							</TouchableOpacity>
 
 						</View>
 

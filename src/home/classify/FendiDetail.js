@@ -105,11 +105,11 @@ class FendiDetail extends Component {
           <FlatList
             data={this.state.productList}
             numColumns='2'
-            renderItem={({ item }) =><TouchableOpacity onPress={() => this.toProductDetail(item)}>
-            <View style={styles.itemViewStyle}>
-              <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
-              <Text style={styles.shopNameStyle}>{item.productName}</Text>
-            </View>
+            renderItem={({ item }) => <TouchableOpacity onPress={() => this.toProductDetail(item)}>
+              <View style={styles.itemViewStyle}>
+                <Image source={{ uri: item.productPicUrl }} style={styles.imageStyle} />
+                <Text style={styles.shopNameStyle}>{item.productName}</Text>
+              </View>
             </TouchableOpacity>
             }
           />

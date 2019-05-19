@@ -19,6 +19,7 @@ import IndexSearch from './home/IndexSearch'
 import UpdUserMsg from './home/UpdUserMsg'
 import NavigationService from './NavigationService'
 import My from './home/My'
+import addrDetail from './home/shopCar/addrDetail'
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -36,6 +37,7 @@ const HomeStack = createStackNavigator({
     IndexSearch:IndexSearch,
     Riegister:Riegister,
     UpdUserMsg:UpdUserMsg,
+    addrDetail:addrDetail,
     My:My
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
