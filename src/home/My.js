@@ -34,9 +34,6 @@ export default class My extends Component{
 componentDidMount=()=>{
   var that = this;
   AsyncStorage.getItem('user',  (errs, result) =>{
-    console.log('=================result===================');
-    console.log(result);
-    console.log('====================================');
     if (errs) {
       alert('获取user错误!')
     } else {

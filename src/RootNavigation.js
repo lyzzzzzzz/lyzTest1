@@ -20,6 +20,7 @@ import UpdUserMsg from './home/UpdUserMsg'
 import NavigationService from './NavigationService'
 import My from './home/My'
 import addrDetail from './home/shopCar/addrDetail'
+import EditAddr from './home/shopCar/EditAddr'
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -38,7 +39,8 @@ const HomeStack = createStackNavigator({
     Riegister:Riegister,
     UpdUserMsg:UpdUserMsg,
     addrDetail:addrDetail,
-    My:My
+    My:My,
+    EditAddr:EditAddr
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
     headerStyle: {
