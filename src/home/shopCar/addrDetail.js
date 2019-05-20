@@ -77,7 +77,7 @@ class addrDetail extends Component {
                 <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
                   <Text style={{ fontSize: 16 }}>{item.name}</Text>
                   <Text style={{ fontSize: 16, marginLeft: 20 }}>{item.phone}</Text>
-                  <TouchableOpacity style={{flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}  onPress={this.toEditAddr(item)}>
+                  <TouchableOpacity style={{flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}  onPress={()=>this.toEditAddr(item)}>
                   <Image style={{ marginLeft: 30, width: 25, height: 25 }} source={require('../../images/edit33.png')}></Image>
                   <Text style={{ color: '#bfbfbf' }}>编辑</Text>
                   </TouchableOpacity>
