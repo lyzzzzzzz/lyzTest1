@@ -33,29 +33,53 @@ class Cart extends Component {
 			result: undefined,
 			tatalPrize: 0,
 			isManage: false,
-			manage:'管理',
-			checkedList:[]
+			manage: '管理',
+			checkedList: [],
+			addrList: [],
+			checkedList2:[]
 		};
 	}
 
 
 	componentDidMount = () => {
 		var that = this;
-		AsyncStorage.getItem('user',  (errs, result) =>{
+		AsyncStorage.getItem('user', (errs, result) => {
 			if (errs) {
 				alert('获取user错误!')
 			} else {
 				that.setState({ result: JSON.parse(result) })
 				that.fetchProductList(JSON.parse(result))
+				that.fetchDefautAddr(JSON.parse(result))
 			}
 		})
 		that.listener = DeviceEventEmitter.addListener('insertIntoShopCar', (message) => {
 			that.fetchProductList(that.state.result)
 		})
+		that.listenerAddr = DeviceEventEmitter.addListener('updAddr', (message) => {
+			that.fetchDefautAddr(that.state.result)
+		})
 
 
 	}
 
+
+	fetchDefautAddr = (result) => {
+		fetch(baseUrl + '/addr/findDefaultAddr?userId=' + result.userId, {
+			method: 'GET',
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			})
+		})
+			.then((response) => response.json())
+			.catch(error => console.error('Error:', error))
+			.then((responseData) => {
+				if (responseData.length > 0) {
+					this.setState({ addrList: responseData })
+				} else {
+					this.setState({ addrList: [] })
+				}
+			});
+	}
 
 
 	componentWillUnmount() {
@@ -95,24 +119,27 @@ class Cart extends Component {
 	}
 
 	onClickCheckBox = (item) => {
+		let num=item.shopCar.productNum
 		item.ischecked = item.ischecked === 0 ? 1 : 0;//改变选中的那个的值
 		this.setState({//重新渲染
 			productList: this.state.productList,
-			tatalPrize: item.ischecked === 1 ? this.state.tatalPrize + item.productPrice : this.state.tatalPrize - item.productPrice
+			tatalPrize: item.ischecked === 1 ? this.state.tatalPrize + item.productPrice*num: this.state.tatalPrize - item.productPrice*num
 		})
 
 		let productList = this.state.productList
 		let productListCheck = []
 		let checkedAllList = []
-		let checkedList=[]
+		let checkedList = []
+		let checkedList2 = []
 		for (let i = 0; i < productList.length; i++) {
 			productListCheck.push(productList[i].ischecked)
-			if(productList[i].ischecked===1){
+			if (productList[i].ischecked === 1) {
 				checkedList.push(productList[i].shopCar.shopcarId)
+				checkedList2.push(productList[i])
 			}
 			checkedAllList.push(1)
 		}
-    this.setState({checkedList:checkedList})
+		this.setState({ checkedList: checkedList, checkedList2:checkedList2})
 		if (productListCheck.toString() == checkedAllList.toString()) {
 			this.setState({ isCheckedAll: true })
 		} else {
@@ -127,17 +154,24 @@ class Cart extends Component {
 		productList.forEach(item => {
 			item.ischecked = this.state.isCheckedAll == true ? 0 : 1
 		});
+		let totalPrize=0;
+		if(!this.state.isCheckedAll==true){
+			productList.forEach(item => {
+				totalPrize=totalPrize+item.productPrice*item.shopCar.productNum
+			});
+		}
 		this.setState({//重新渲染
 			productList: productList,
+			tatalPrize:totalPrize
 		})
 	}
 
 	reduceProductNum = (shopCar, action) => {
 		let productNum = shopCar.productNum
-		if (productNum === 1) {
+		if (productNum === 1&&action=='reduceShopCar') {
 			return
 		}
-		fetch(baseUrl + '/shopCar/' + action + '?productId=' + shopCar.productId + '&userId=' + shopCar.userId + '&productNum=' + 1, {
+		fetch(baseUrl + '/shopCar/' + action + '?productId=' + shopCar.productId + '&userId=' + shopCar.userId + '&productNum=' +1, {
 			method: 'POST',
 			headers: new Headers({
 				'Content-Type': 'application/json'
@@ -171,63 +205,72 @@ class Cart extends Component {
 	}
 
 	clickManage = () => {
-		this.setState({ isManage: this.state.isManage?false:true,manage:this.state.manage==='管理'?'完成':'管理' })
+		this.setState({ isManage: this.state.isManage ? false : true, manage: this.state.manage === '管理' ? '完成' : '管理' })
 	}
 
-	clickDelete=()=>{
+	clickDelete = () => {
 
 		Alert.alert(
 			'',
-		'确定删除吗?',
+			'确定删除吗?',
 			[
-				{text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-				{text: '确认', onPress: () =>{
-					let result=JSON.parse(this.state.result)
-					let userid=result.userId
-					fetch(baseUrl + '/shopCar/batchDeleteByIds?array='+this.state.checkedList, {
-						method: 'DELETE',
-						headers: new Headers({
-							'Content-Type': 'application/json'
+				{ text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+				{
+					text: '确认', onPress: () => {
+						let result = JSON.parse(this.state.result)
+						let userid = result.userId
+						fetch(baseUrl + '/shopCar/batchDeleteByIds?array=' + this.state.checkedList, {
+							method: 'DELETE',
+							headers: new Headers({
+								'Content-Type': 'application/json'
+							})
 						})
-					})
-						.then((response) => response.json())
-						.catch(error => console.error('Error:', error))
-						.then((responseData) => {
-							if (responseData > 0) {
-							
-								fetch(baseUrl + '/product/selectProductByUserId?userId=' + userid, {
-									method: 'GET',
-									headers: new Headers({
-										'Content-Type': 'application/json'
+							.then((response) => response.json())
+							.catch(error => console.error('Error:', error))
+							.then((responseData) => {
+								if (responseData > 0) {
+
+									fetch(baseUrl + '/product/selectProductByUserId?userId=' + userid, {
+										method: 'GET',
+										headers: new Headers({
+											'Content-Type': 'application/json'
+										})
 									})
-								})
-									.then((response) => response.json())
-									.catch(error => console.error('Error:', error))
-									.then((responseData) => {
-										if (responseData.length != 0) {
-											this.setState({ productList: responseData })
-										} else {
-											ToastAndroid.show("出错了!", ToastAndroid.SHORT);
-										}
-									});
-			
-							} else {
-								ToastAndroid.show("出错了!", ToastAndroid.SHORT);
-							}
-						});
-				}},
+										.then((response) => response.json())
+										.catch(error => console.error('Error:', error))
+										.then((responseData) => {
+											if (responseData.length != 0) {
+												this.setState({ productList: responseData })
+											} else {
+												ToastAndroid.show("出错了!", ToastAndroid.SHORT);
+											}
+										});
+
+								} else {
+									ToastAndroid.show("出错了!", ToastAndroid.SHORT);
+								}
+							});
+					}
+				},
 			],
 			{ cancelable: false }
 		)
 	}
 
-	toEditMsg=()=>{
+	toEditMsg = () => {
 		NavigationService.navigate('addrDetail', { adrr: this.state.result });
+	}
+
+	toOrder= () => {
+		NavigationService.navigate('Order',{checkedList:this.state.isCheckedAll?this.state.productList:this.state.checkedList2,tatalPrize:this.state.tatalPrize});
 	}
 
 
 	render() {
-		let userMsg=this.state.result;
+		let userMsg = this.state.result;
+		let defaultAddr = this.state.addrList
+		let addr = defaultAddr == [] ? undefined : defaultAddr[0]
+
 		return (
 			<View style={{ flexDirection: 'column', justifyContent: 'space-between', display: 'flex', flex: 1 }}>
 				<View style={{ width: '100%', height: 50, backgroundColor: '#FFACAC', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -240,27 +283,27 @@ class Cart extends Component {
 					<View style={{ flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center', marginBottom: 50 }}>
 
 
-						<View style={styles.addr}>
+						{/* <View style={styles.addr}>
 							<View style={{ width: '100%', height: 35, flexDirection: 'row', alignItems: 'center' }}>
 								<Text style={{ color: '#571D0C', fontSize: 17, marginLeft: 5 }}>收货地址</Text>
 							</View>
 							<View style={{ width: '100%', height: 2, backgroundColor: '#F0F0F0' }}></View>
 							<TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '100%', }} onPress={this.toEditMsg}>
 								<View style={{ width: '80%', height: 90, flexDirection: 'column', justifyContent: 'space-around', marginLeft: 5 }}>
-									<Text style={{ fontSize: 16, color: '#571D0C' }}>{userMsg==undefined?'':userMsg.userAddress}</Text>
-									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userName}</Text>
-									<Text style={{ fontSize: 15 }}>{userMsg==undefined?'':userMsg.userPhone}</Text>
+									<Text style={{ fontSize: 16, color: '#571D0C' }}>{addr == undefined ? '' : addr.addrdetail}</Text>
+									<Text style={{ fontSize: 15 }}>{addr == undefined ? '' : addr.name}</Text>
+									<Text style={{ fontSize: 15 }}>{addr == undefined ? '' : addr.phone}</Text>
 								</View>
 								<View style={styles.editAddr}>
 									<Image source={require('../images/jiantou.png')}></Image>
 								</View>
 							</TouchableOpacity>
 
-						</View>
+						</View> */}
 
 						<FlatList
-							style={{ width: '100%' }}
-							data={this.state.productList}
+							style={{ width: '100%',marginTop:10 }}
+							data={this.state.productList==[]?'':this.state.productList}
 							renderItem={({ item }) => {
 								let productNum = item.shopCar.productNum
 								let shopCar = item.shopCar
@@ -322,9 +365,9 @@ class Cart extends Component {
 						</View> : <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 								<Text style={{ color: 'black' }}>合计:</Text>
 								<Text style={{ color: 'red' }}>￥{this.state.tatalPrize}</Text>
-								<View style={styles.settlement}>
+								<TouchableOpacity style={styles.settlement} onPress={this.toOrder}>
 									<Text style={{ color: 'white', fontWeight: 'bold' }}>结算</Text>
-								</View>
+								</TouchableOpacity>
 							</View>
 					}
 
@@ -494,11 +537,11 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		width: 180,
 	},
-	editAddr:{
-		width: '15%', 
-		height: 50, 
-		flexDirection: 'row', 
-		alignItems: 'center', 
+	editAddr: {
+		width: '15%',
+		height: 50,
+		flexDirection: 'row',
+		alignItems: 'center',
 		justifyContent: 'flex-end'
 	}
 });

@@ -21,6 +21,9 @@ import NavigationService from './NavigationService'
 import My from './home/My'
 import addrDetail from './home/shopCar/addrDetail'
 import EditAddr from './home/shopCar/EditAddr'
+import AddAddr from './home/shopCar/AddAddr'
+import Order from './home/shopCar/Order'
+import MyOrder from './home/shopCar/MyOrder'
 //主页
 const HomeStack = createStackNavigator({
     HomeScreen: HomeScreen,
@@ -40,7 +43,10 @@ const HomeStack = createStackNavigator({
     UpdUserMsg:UpdUserMsg,
     addrDetail:addrDetail,
     My:My,
-    EditAddr:EditAddr
+    EditAddr:EditAddr,
+    AddAddr:AddAddr,
+    Order:Order,
+    MyOrder:MyOrder
 }, { initialRouteName: "HomeScreen" ,
 defaultNavigationOptions: {
     headerStyle: {
